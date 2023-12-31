@@ -11,17 +11,19 @@
 
     /* Cross-frame scripting and click-jacking */
     header('X-FRAME-OPTIONS: DENY', TRUE);
-    header("Content-Security-Policy: default-src 'self';", TRUE);
+
+    /* Client-side Script injection */
+    header('Content-Security-Policy: default-src \'self\';', TRUE);
 
     /* Content sniffing */
-    header("X-Content-Type-Options: nosniff", TRUE);
+    header('X-Content-Type-Options: nosniff', TRUE);
 
     /* Referrer Policy */
-    header("Referrer-Policy: no-referrer", TRUE);
+    header('Referrer-Policy: no-referrer', TRUE);
 
     /* Server version banners */
-    header_remove("X-Powered-By");
-    header_remove("Server");
+    header_remove('X-Powered-By');
+    header_remove('Server');
 
     $l_http_client_ip_address = "";
     $l_http_x_forwarded_for = "";
