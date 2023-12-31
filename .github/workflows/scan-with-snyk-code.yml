@@ -13,8 +13,17 @@ on:
 # Define the job(s) to be executed within the workflow
 jobs:
   security:
+
     runs-on: ubuntu-latest
+    
+    # Define permissions for specific actions
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
     name: Run Snyk
+    
     env:
       SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       # Define an environment variable 'SNYK_TOKEN' to securely store your Snyk token
