@@ -5,8 +5,11 @@
     $l_http_x_forwarded = "";
     $l_http_forwarded_for = "";
     $l_http_forwarded = "";
-    $l_http_remote_address = "";
-    
+    $l_user_agent_string = "";
+
+    if (isset($_SERVER['HTTP_USER_AGENT'])){
+        $l_user_agent_string = $_SERVER['HTTP_USER_AGENT'];
+    };
 
     if (isset($_SERVER['HTTP_CLIENT_IP'])){
         $l_client_ip_address = $_SERVER['HTTP_CLIENT_IP'];
@@ -30,9 +33,7 @@
 
     if (isset($_SERVER['REMOTE_ADDR'])){
         $l_http_remote_address = $_SERVER['REMOTE_ADDR'];
-    };  
-
-    phpinfo();
+    };
 
 ?>
 
@@ -48,15 +49,22 @@
     </head>
 
     <body class="content">
-        <h1>Dragonfly</h1>
         <table class="styled-table">
             <thead>
                 <tr>
                     <th>Data Point</th>
-                    <th>Data</th>
+                    <th>Value</th>
                 </tr>
             </thead>
             <tbody>
+                <tr>
+                    <td>User Agent String</td>
+                    <td><?php echo htmlspecialchars($l_user_agent_string); ?></td>
+                </tr>
+                <tr>
+                    <td>HTTP Remote IP Address</td>
+                    <td><?php echo htmlspecialchars($l_http_remote_address); ?></td>
+                </tr>
                 <tr>
                     <td>HTTP Client IP Address</td>
                     <td><?php echo htmlspecialchars($l_http_client_ip_address); ?></td>
@@ -76,10 +84,6 @@
                 <tr>
                     <td>Forwarded</td>
                     <td><?php echo htmlspecialchars($l_http_forwarded); ?></td>
-                </tr>
-                <tr>
-                    <td>HTTP Remote IP Address</td>
-                    <td><?php echo htmlspecialchars($l_http_remote_address); ?></td>
                 </tr>
             </tbody>
         </table>
