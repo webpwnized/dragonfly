@@ -28,8 +28,8 @@
         $l_http_forwarded = $_SERVER['HTTP_FORWARDED'];
     };  
 
-    if (isset($_SERVER['HTTP_REMOTE_ADDR'])){
-        $l_http_remote_address = $_SERVER['HTTP_REMOTE_ADDR'];
+    if (isset($_SERVER['REMOTE_ADDR'])){
+        $l_http_remote_address = $_SERVER['REMOTE_ADDR'];
     };  
 
     phpinfo();
