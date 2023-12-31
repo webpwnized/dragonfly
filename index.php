@@ -8,28 +8,28 @@
     $l_http_remote_address = "";
     
 
-    if (getenv('HTTP_CLIENT_IP')){
-        $l_client_ip_address = getenv('HTTP_CLIENT_IP');
+    if (getenv($_SERVER['HTTP_CLIENT_IP'])){
+        $l_client_ip_address = getenv($_SERVER['HTTP_CLIENT_IP']);
     };
         
-    if(getenv('HTTP_X_FORWARDED_FOR')){
-        $l_http_x_forwarded_for = getenv('HTTP_X_FORWARDED_FOR');
+    if(getenv($_SERVER['HTTP_X_FORWARDED_FOR'])){
+        $l_http_x_forwarded_for = getenv($_SERVER['HTTP_X_FORWARDED_FOR']);
     };
 
-    if(getenv('HTTP_X_FORWARDED')){
-        $l_http_x_forwarded = getenv('HTTP_X_FORWARDED');
+    if(getenv($_SERVER['HTTP_X_FORWARDED'])){
+        $l_http_x_forwarded = getenv($_SERVER['HTTP_X_FORWARDED']);
     };
     
-    if(getenv('HTTP_FORWARDED_FOR')){
-        $l_http_forwarded_for = getenv('HTTP_FORWARDED_FOR');
+    if(getenv($_SERVER['HTTP_FORWARDED_FOR'])){
+        $l_http_forwarded_for = getenv($_SERVER['HTTP_FORWARDED_FOR']);
     };
 
-    if(getenv('HTTP_FORWARDED')){
-        $l_http_forwarded = getenv('HTTP_FORWARDED');
+    if(getenv($_SERVER['HTTP_FORWARDED'])){
+        $l_http_forwarded = getenv($_SERVER['HTTP_FORWARDED']);
     };  
 
-    if(getenv('HTTP_REMOTE_ADDR')){
-        $l_http_remote_address = getenv('HTTP_REMOTE_ADDR');
+    if(getenv($_SERVER['HTTP_REMOTE_ADDR'])){
+        $l_http_remote_address = getenv($_SERVER['HTTP_REMOTE_ADDR']);
     };  
 
     phpinfo();
@@ -59,27 +59,27 @@
             <tbody>
                 <tr>
                     <td>HTTP Client IP Address</td>
-                    <td><?php echo $l_http_client_ip_address; ?></td>
+                    <td><?php echo htmlspecialchars($l_http_client_ip_address); ?></td>
                 </tr>
                 <tr>
                     <td>X Forwarded For</td>
-                    <td><?php echo $l_http_x_forwarded_for; ?></td>
+                    <td><?php echo htmlspecialchars($l_http_x_forwarded_for); ?></td>
                 </tr>
                 <tr>
                     <td>X Forwarded</td>
-                    <td><?php echo $l_http_x_forwarded; ?></td>
+                    <td><?php echo htmlspecialchars($l_http_x_forwarded); ?></td>
                 </tr>
                 <tr>
                     <td>Forwarded For</td>
-                    <td><?php echo $l_http_forwarded_for; ?></td>
+                    <td><?php echo htmlspecialchars($l_http_forwarded_for); ?></td>
                 </tr>
                 <tr>
                     <td>Forwarded</td>
-                    <td><?php echo $l_http_forwarded; ?></td>
+                    <td><?php echo htmlspecialchars($l_http_forwarded); ?></td>
                 </tr>
                 <tr>
                     <td>HTTP Remote IP Address</td>
-                    <td><?php echo $l_http_remote_address; ?></td>
+                    <td><?php echo htmlspecialchars($l_http_remote_address); ?></td>
                 </tr>
             </tbody>
         </table>
