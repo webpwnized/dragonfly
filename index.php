@@ -1,5 +1,28 @@
 <?php
 
+    /* Built-in user-agent defenses */
+    header("X-XSS-Protection: 1; mode=block;", TRUE);
+
+    /* Enable HSTS - Only available with HTTPS*/
+    //header("Strict-Transport-Security: max-age=31536000; includeSubDomains", TRUE);
+
+    // HTTP/1.1 cache control
+    header('Cache-Control: no-store, no-cache', TRUE);
+
+    /* Cross-frame scripting and click-jacking */
+    header('X-FRAME-OPTIONS: DENY', TRUE);
+    header("Content-Security-Policy: default-src 'self';", TRUE);
+
+    /* Content sniffing */
+    header("X-Content-Type-Options: nosniff", TRUE);
+
+    /* Referrer Policy */
+    header("Referrer-Policy: no-referrer", TRUE);
+
+    /* Server version banners */
+    header_remove("X-Powered-By");
+    header_remove("Server");
+
     $l_http_client_ip_address = "";
     $l_http_x_forwarded_for = "";
     $l_http_x_forwarded = "";
@@ -45,7 +68,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Dragonfly</title>
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="css/styles.css">
     </head>
 
     <body class="content">
