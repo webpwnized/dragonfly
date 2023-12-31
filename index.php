@@ -8,28 +8,28 @@
     $l_http_remote_address = "";
     
 
-    if (getenv($_SERVER['HTTP_CLIENT_IP'])){
-        $l_client_ip_address = getenv($_SERVER['HTTP_CLIENT_IP']);
+    if (isset($_SERVER['HTTP_CLIENT_IP'])){
+        $l_client_ip_address = $_SERVER['HTTP_CLIENT_IP'];
     };
         
-    if(getenv($_SERVER['HTTP_X_FORWARDED_FOR'])){
-        $l_http_x_forwarded_for = getenv($_SERVER['HTTP_X_FORWARDED_FOR']);
+    if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])){
+        $l_http_x_forwarded_for = $_SERVER['HTTP_X_FORWARDED_FOR'];
     };
 
-    if(getenv($_SERVER['HTTP_X_FORWARDED'])){
-        $l_http_x_forwarded = getenv($_SERVER['HTTP_X_FORWARDED']);
+    if (isset($_SERVER['HTTP_X_FORWARDED'])){
+        $l_http_x_forwarded = $_SERVER['HTTP_X_FORWARDED'];
     };
     
-    if(getenv($_SERVER['HTTP_FORWARDED_FOR'])){
-        $l_http_forwarded_for = getenv($_SERVER['HTTP_FORWARDED_FOR']);
+    if (isset($_SERVER['HTTP_FORWARDED_FOR'])){
+        $l_http_forwarded_for = $_SERVER['HTTP_FORWARDED_FOR'];
     };
 
-    if(getenv($_SERVER['HTTP_FORWARDED'])){
-        $l_http_forwarded = getenv($_SERVER['HTTP_FORWARDED']);
+    if (isset($_SERVER['HTTP_FORWARDED'])){
+        $l_http_forwarded = $_SERVER['HTTP_FORWARDED'];
     };  
 
-    if(getenv($_SERVER['HTTP_REMOTE_ADDR'])){
-        $l_http_remote_address = getenv($_SERVER['HTTP_REMOTE_ADDR']);
+    if (isset($_SERVER['HTTP_REMOTE_ADDR'])){
+        $l_http_remote_address = $_SERVER['HTTP_REMOTE_ADDR'];
     };  
 
     phpinfo();
