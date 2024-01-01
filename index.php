@@ -68,15 +68,15 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>User Agent String</td>
+                    <th>User Agent String</td>
                     <td><?php echo htmlspecialchars($l_user_agent_string); ?></td>
                 </tr>
                 <tr>
-                    <td>HTTP Client IP Address</td>
+                    <th>HTTP Client IP Address</td>
                     <td><?php echo htmlspecialchars($l_client_ip_address); ?></td>
                 </tr>
                 <tr>
-                    <td>Forwarded For</td>
+                    <th>Forwarded For</td>
                     <td><?php echo htmlspecialchars($l_forwarded_for); ?></td>
                 </tr>
             </tbody>
