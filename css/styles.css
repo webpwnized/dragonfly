@@ -22,7 +22,7 @@
 }
 
 /* Table Cells */
-.styled-table tbody tr th {
+.styled-table tr th {
     padding: 12px 15px;
     text-align: left;
     font-weight: bold;
