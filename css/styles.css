@@ -22,7 +22,11 @@
 }
 
 /* Table Cells */
-.styled-table th,
+.styled-table th {
+    padding: 12px 15px;
+    text-align: left;
+}
+
 .styled-table td {
     padding: 12px 15px;
 }
