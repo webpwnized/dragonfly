@@ -99,7 +99,7 @@
                     window.document.getElementById("id28").innerText = client.getTimeZone();
                     window.document.getElementById("id29").innerText = client.getLanguage();
                     window.document.getElementById("id30").innerText = client.getSystemLanguage();
-                    window.document.getElementById("id31").innerText = client.getCanvasPrint().left(100);
+                    window.document.getElementById("id31").innerText = client.getCanvasPrint().left(64);
                 }
             });
 
