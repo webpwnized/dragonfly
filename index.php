@@ -70,81 +70,67 @@
                     // Create a new ClientJS object
                     const client = new ClientJS();
 
-                    // Print the 32bit hash id to the console
                     window.document.getElementById("id1").innerText = client.getFingerprint();
+                    window.document.getElementById("id2").innerText = client.getUserAgent();
+                    window.document.getElementById("id3").innerText = client.getBrowser();
+                    window.document.getElementById("id4").innerText = client.getBrowserVersion();
+                    window.document.getElementById("id5").innerText = client.getEngine();
+                    window.document.getElementById("id6").innerText = client.getEngineVersion();
+                    window.document.getElementById("id7").innerText = client.getOS();
+                    window.document.getElementById("id8").innerText = client.getOSVersion();
+                    
+                    client.isWindows();
+                    client.isMac();
+                    client.isLinux();
+                    client.isUbuntu();
+                    client.isSolaris();
 
-                    console.log(client.getBrowserData());
-                    console.log(client.getFingerprint());
+                    client.getDevice();
+                    client.getDeviceType();
+                    client.getDeviceVendor();
 
-                    console.log(client.getUserAgent());
-                    console.log(client.getUserAgentLowerCase());
+                    client.getCPU();
 
-                    console.log(client.getBrowser());
-                    console.log(client.getBrowserVersion());
-                    console.log(client.getBrowserMajorVersion());
-                    console.log(client.isIE());
-                    console.log(client.isChrome());
-                    console.log(client.isFirefox());
-                    console.log(client.isSafari());
-                    console.log(client.isOpera());
+                    client.isMobile();
+                    client.isMobileMajor();
+                    client.isMobileAndroid();
+                    client.isMobileOpera();
+                    client.isMobileWindows();
+                    client.isMobileBlackBerry();
 
-                    console.log(client.getEngine());
-                    console.log(client.getEngineVersion());
+                    client.isMobileIOS();
+                    client.isIphone();
+                    client.isIpad();
+                    client.isIpod();
 
-                    console.log(client.getOS());
-                    console.log(client.getOSVersion());
-                    console.log(client.isWindows());
-                    console.log(client.isMac());
-                    console.log(client.isLinux());
-                    console.log(client.isUbuntu());
-                    console.log(client.isSolaris());
+                    client.getScreenPrint();
+                    client.getColorDepth();
+                    client.getCurrentResolution();
+                    client.getAvailableResolution();
+                    client.getDeviceXDPI();
+                    client.getDeviceYDPI();
 
-                    console.log(client.getDevice());
-                    console.log(client.getDeviceType());
-                    console.log(client.getDeviceVendor());
+                    client.getPlugins();
+                    client.isSilverlight();
+                    client.getSilverlightVersion();
 
-                    console.log(client.getCPU());
+                    client.getMimeTypes();
+                    client.isMimeTypes();
 
-                    console.log(client.isMobile());
-                    console.log(client.isMobileMajor());
-                    console.log(client.isMobileAndroid());
-                    console.log(client.isMobileOpera());
-                    console.log(client.isMobileWindows());
-                    console.log(client.isMobileBlackBerry());
+                    client.isFont();
+                    client.getFonts();
 
-                    console.log(client.isMobileIOS());
-                    console.log(client.isIphone());
-                    console.log(client.isIpad());
-                    console.log(client.isIpod());
+                    client.isLocalStorage();
+                    client.isSessionStorage();
+                    client.isCookie();
 
-                    console.log(client.getScreenPrint());
-                    console.log(client.getColorDepth());
-                    console.log(client.getCurrentResolution());
-                    console.log(client.getAvailableResolution());
-                    console.log(client.getDeviceXDPI());
-                    console.log(client.getDeviceYDPI());
+                    client.getTimeZone();
 
-                    console.log(client.getPlugins());
-                    console.log(client.isSilverlight());
-                    console.log(client.getSilverlightVersion());
+                    client.getLanguage();
+                    client.getSystemLanguage();
 
-                    console.log(client.getMimeTypes());
-                    console.log(client.isMimeTypes());
-
-                    console.log(client.isFont());
-                    console.log(client.getFonts());
-
-                    console.log(client.isLocalStorage());
-                    console.log(client.isSessionStorage());
-                    console.log(client.isCookie());
-
-                    console.log(client.getTimeZone());
-
-                    console.log(client.getLanguage());
-                    console.log(client.getSystemLanguage());
-
-                    console.log(client.isCanvas());
-                    console.log(client.getCanvasPrint());
+                    client.isCanvas();
+                    client.getCanvasPrint();
                 }
             });
 
@@ -174,6 +160,34 @@
                 <tr>
                     <th>Browser Tracking Fingerprint</th>
                     <td><span id="id1"></span></td>
+                </tr>
+                <tr>
+                    <th>User Agent</th>
+                    <td><span id="id2"></span></td>
+                </tr>
+                <tr>
+                    <th>Browser</th>
+                    <td><span id="id3"></span></td>
+                </tr>
+                <tr>
+                    <th>Browser Version</th>
+                    <td><span id="id4"></span></td>
+                </tr>
+                <tr>
+                    <th>Browser Engine</th>
+                    <td><span id="id5"></span></td>
+                </tr>
+                <tr>
+                    <th>Browser Engine Version</th>
+                    <td><span id="id6"></span></td>
+                </tr>
+                <tr>
+                    <th>Operating System</th>
+                    <td><span id="id7"></span></td>
+                </tr>
+                <tr>
+                    <th>Operating System Version</th>
+                    <td><span id="id8"></span></td>
                 </tr>
             </tbody>
         </table>
