@@ -65,7 +65,7 @@
             const { ClientJS } = require('clientjs');
 
             // in a browser, when using a script tag:
-            const ClientJS = window.ClientJS;
+            //const ClientJS = window.ClientJS;
 
             // Create a new ClientJS object
             const client = new ClientJS();
