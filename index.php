@@ -128,10 +128,6 @@
                     client.getDeviceYDPI();
 
                     client.getPlugins();
-                    client.isJava();
-                    client.getJavaVersion(); // functional only in java and full builds, throws an error otherwise
-                    client.isFlash();
-                    client.getFlashVersion(); // functional only in flash and full builds, throws an error otherwise
                     client.isSilverlight();
                     client.getSilverlightVersion();
 
