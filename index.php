@@ -10,7 +10,7 @@
     header('X-FRAME-OPTIONS: DENY', TRUE);
 
     /* Client-side Script injection */
-    header("Content-Security-Policy: default-src 'self'; script-src 'nonce-efe3f3d7e23b979ae212c5092469ce195401701a71a00eba0f4f955a068b05e2'", TRUE);
+    header("Content-Security-Policy: default-src 'self'; script-src 'self' 'nonce-efe3f3d7e23b979ae212c5092469ce195401701a71a00eba0f4f955a068b05e2'", TRUE);
 
     /* Content sniffing */
     header('X-Content-Type-Options: nosniff', TRUE);
