@@ -24,11 +24,6 @@
 
     $l_client_ip_address = "";
     $l_forwarded_for = "";
-    $l_user_agent_string = "";
-
-    if (isset($_SERVER['HTTP_USER_AGENT'])){
-        $l_user_agent_string = $_SERVER['HTTP_USER_AGENT'];
-    };
 
     if (isset($_SERVER['HTTP_CLIENT_IP'])){
         $l_client_ip_address = $_SERVER['HTTP_CLIENT_IP'];
@@ -78,21 +73,13 @@
                     window.document.getElementById("id6").innerText = client.getEngineVersion();
                     window.document.getElementById("id7").innerText = client.getOS();
                     window.document.getElementById("id8").innerText = client.getOSVersion();
-                    
-                    client.isWindows();
-                    client.isMac();
-                    client.isLinux();
-                    client.isUbuntu();
-                    client.isSolaris();
+                    window.document.getElementById("id9").innerText = client.getDevice();
+                    window.document.getElementById("id10").innerText = client.getDeviceType();
+                    window.document.getElementById("id11").innerText = client.getDeviceVendor();
+                    window.document.getElementById("id12").innerText = client.getCPU();
+                    window.document.getElementById("id13").innerText = client.isMobile();
+                    window.document.getElementById("id14").innerText = client.isMobileMajor();
 
-                    client.getDevice();
-                    client.getDeviceType();
-                    client.getDeviceVendor();
-
-                    client.getCPU();
-
-                    client.isMobile();
-                    client.isMobileMajor();
                     client.isMobileAndroid();
                     client.isMobileOpera();
                     client.isMobileWindows();
@@ -146,10 +133,6 @@
             </thead>
             <tbody>
                 <tr>
-                    <th>User Agent String</th>
-                    <td><?php echo htmlspecialchars($l_user_agent_string); ?></td>
-                </tr>
-                <tr>
                     <th>HTTP Client IP Address</th>
                     <td><?php echo htmlspecialchars($l_client_ip_address); ?></td>
                 </tr>
@@ -188,6 +171,31 @@
                 <tr>
                     <th>Operating System Version</th>
                     <td><span id="id8"></span></td>
+                </tr>
+
+                <tr>
+                    <th>Device</th>
+                    <td><span id="id9"></span></td>
+                </tr>
+                <tr>
+                    <th>Device Type</th>
+                    <td><span id="id10"></span></td>
+                </tr>
+                <tr>
+                    <th>Device Vendor</th>
+                    <td><span id="id11"></span></td>
+                </tr>
+                <tr>
+                    <th>CPU</th>
+                    <td><span id="id12"></span></td>
+                </tr>
+                <tr>
+                    <th>Is Mobile</th>
+                    <td><span id="id13"></span></td>
+                </tr>
+                <tr>
+                    <th>Mobile Vendor</th>
+                    <td><span id="id14"></span></td>
                 </tr>
             </tbody>
         </table>
