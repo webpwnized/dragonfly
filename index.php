@@ -59,7 +59,7 @@
         <script type="text/javascript" src="javascript/client.base.min.js">
             /* Credit to https://github.com/JackSpirou/ClientJS?tab=readme-ov-file#bundles */
         </script>
-        <script defer type="text/javascript" nonce="efe3f3d7e23b979ae212c5092469ce195401701a71a00eba0f4f955a068b05e2">
+        <script type="text/javascript" nonce="efe3f3d7e23b979ae212c5092469ce195401701a71a00eba0f4f955a068b05e2">
 
             document.addEventListener('readystatechange', event => {
                 // When window loaded ( external resources are loaded too- `css`,`src`, etc...) 
@@ -75,6 +75,84 @@
 
                     // Print the 32bit hash id to the console
                     console.log(fingerprint);
+
+                    client.getBrowserData();
+                    client.getFingerprint();
+                    client.getCustomFingerprint(...);
+
+                    client.getUserAgent();
+                    client.getUserAgentLowerCase();
+
+                    client.getBrowser();
+                    client.getBrowserVersion();
+                    client.getBrowserMajorVersion();
+                    client.isIE();
+                    client.isChrome();
+                    client.isFirefox();
+                    client.isSafari();
+                    client.isOpera();
+
+                    client.getEngine();
+                    client.getEngineVersion();
+
+                    client.getOS();
+                    client.getOSVersion();
+                    client.isWindows();
+                    client.isMac();
+                    client.isLinux();
+                    client.isUbuntu();
+                    client.isSolaris();
+
+                    client.getDevice();
+                    client.getDeviceType();
+                    client.getDeviceVendor();
+
+                    client.getCPU();
+
+                    client.isMobile();
+                    client.isMobileMajor();
+                    client.isMobileAndroid();
+                    client.isMobileOpera();
+                    client.isMobileWindows();
+                    client.isMobileBlackBerry();
+
+                    client.isMobileIOS();
+                    client.isIphone();
+                    client.isIpad();
+                    client.isIpod();
+
+                    client.getScreenPrint();
+                    client.getColorDepth();
+                    client.getCurrentResolution();
+                    client.getAvailableResolution();
+                    client.getDeviceXDPI();
+                    client.getDeviceYDPI();
+
+                    client.getPlugins();
+                    client.isJava();
+                    client.getJavaVersion(); // functional only in java and full builds, throws an error otherwise
+                    client.isFlash();
+                    client.getFlashVersion(); // functional only in flash and full builds, throws an error otherwise
+                    client.isSilverlight();
+                    client.getSilverlightVersion();
+
+                    client.getMimeTypes();
+                    client.isMimeTypes();
+
+                    client.isFont();
+                    client.getFonts();
+
+                    client.isLocalStorage();
+                    client.isSessionStorage();
+                    client.isCookie();
+
+                    client.getTimeZone();
+
+                    client.getLanguage();
+                    client.getSystemLanguage();
+
+                    client.isCanvas();
+                    client.getCanvasPrint();
                 }
             });
 
