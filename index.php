@@ -61,17 +61,22 @@
         </script>
         <script defer type="text/javascript" nonce="efe3f3d7e23b979ae212c5092469ce195401701a71a00eba0f4f955a068b05e2">
 
-            // in a browser, when using a script tag:
-            const ClientJS = window.ClientJS;
+            document.addEventListener('readystatechange', event => {
+                // When window loaded ( external resources are loaded too- `css`,`src`, etc...) 
+                if (event.target.readyState === "complete") {
+                    // in a browser, when using a script tag:
+                    const ClientJS = window.ClientJS;
 
-            // Create a new ClientJS object
-            const client = new ClientJS();
+                    // Create a new ClientJS object
+                    const client = new ClientJS();
 
-            // Get the client's fingerprint id
-            const fingerprint = client.getFingerprint();
+                    // Get the client's fingerprint id
+                    const fingerprint = client.getFingerprint();
 
-            // Print the 32bit hash id to the console
-            console.log(fingerprint);
+                    // Print the 32bit hash id to the console
+                    console.log(fingerprint);
+                }
+            });
 
         </script>
     </head>
