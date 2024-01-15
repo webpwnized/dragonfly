@@ -85,7 +85,7 @@
             ];
 
             imprint.test(browserTests).then(function(result){
-            console.log(result);
+            alert(result);
             });
         </script>
     </head>
@@ -100,15 +100,15 @@
             </thead>
             <tbody>
                 <tr>
-                    <th>User Agent String</td>
+                    <th>User Agent String</th>
                     <td><?php echo htmlspecialchars($l_user_agent_string); ?></td>
                 </tr>
                 <tr>
-                    <th>HTTP Client IP Address</td>
+                    <th>HTTP Client IP Address</th>
                     <td><?php echo htmlspecialchars($l_client_ip_address); ?></td>
                 </tr>
                 <tr>
-                    <th>Forwarded For</td>
+                    <th>Forwarded For</th>
                     <td><?php echo htmlspecialchars($l_forwarded_for); ?></td>
                 </tr>
             </tbody>
