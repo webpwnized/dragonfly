@@ -56,13 +56,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Dragonfly</title>
         <link rel="stylesheet" href="css/styles.css">
-        <script type="text/javascript" type="module" src="javascript/client.java.min.js">
+        <script type="text/javascript" src="javascript/client.java.min.js">
             /* Credit to https://github.com/JackSpirou/ClientJS?tab=readme-ov-file#bundles */
         </script>
         <script type="text/javascript" nonce="efe3f3d7e23b979ae212c5092469ce195401701a71a00eba0f4f955a068b05e2">
-
-            // in an ES6 environment:
-            import { ClientJS } from 'clientjs';
 
             // via CommonJS imports:
             const { ClientJS } = require('clientjs');
