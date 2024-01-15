@@ -56,37 +56,88 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Dragonfly</title>
         <link rel="stylesheet" href="css/styles.css">
-        <script type="text/javascript" src="javascript/imprint.min.js"></script>
+        <script type="text/javascript" src="javascript/client.min.js">
+            /* Credit to https://github.com/JackSpirou/ClientJS?tab=readme-ov-file#bundles */
+        </script>
         <script type="text/javascript">
-            var browserTests = [
-                "audio",
-                "availableScreenResolution",
-                "canvas",
-                "colorDepth",
-                "cookies",
-                "cpuClass",
-                "deviceDpi",
-                "doNotTrack",
-                "indexedDb",
-                "installedFonts",
-                "language",
-                "localIp",
-                "localStorage",
-                "pixelRatio",
-                "platform",
-                "plugins",
-                "processorCores",
-                "screenResolution",
-                "sessionStorage",
-                "timezoneOffset",
-                "touchSupport",
-                "userAgent",
-                "webGl"
-            ];
+            const client = new ClientJS();
 
-            imprint.test(browserTests).then(function(result){
-            alert(result);
-            });
+            alert(client.getBrowserData());
+            client.getFingerprint();
+            client.getCustomFingerprint();
+
+            client.getUserAgent();
+            client.getUserAgentLowerCase();
+
+            client.getBrowser();
+            client.getBrowserVersion();
+            client.getBrowserMajorVersion();
+            client.isIE();
+            client.isChrome();
+            client.isFirefox();
+            client.isSafari();
+            client.isOpera();
+
+            client.getEngine();
+            client.getEngineVersion();
+
+            client.getOS();
+            client.getOSVersion();
+            client.isWindows();
+            client.isMac();
+            client.isLinux();
+            client.isUbuntu();
+            client.isSolaris();
+
+            client.getDevice();
+            client.getDeviceType();
+            client.getDeviceVendor();
+
+            client.getCPU();
+
+            client.isMobile();
+            client.isMobileMajor();
+            client.isMobileAndroid();
+            client.isMobileOpera();
+            client.isMobileWindows();
+            client.isMobileBlackBerry();
+
+            client.isMobileIOS();
+            client.isIphone();
+            client.isIpad();
+            client.isIpod();
+
+            client.getScreenPrint();
+            client.getColorDepth();
+            client.getCurrentResolution();
+            client.getAvailableResolution();
+            client.getDeviceXDPI();
+            client.getDeviceYDPI();
+
+            client.getPlugins();
+            client.isJava();
+            client.getJavaVersion(); // functional only in java and full builds, throws an error otherwise
+            client.isFlash();
+            client.isSilverlight();
+            client.getSilverlightVersion();
+
+            client.getMimeTypes();
+            client.isMimeTypes();
+
+            client.isFont();
+            client.getFonts();
+
+            client.isLocalStorage();
+            client.isSessionStorage();
+            client.isCookie();
+
+            client.getTimeZone();
+
+            client.getLanguage();
+            client.getSystemLanguage();
+
+            client.isCanvas();
+            client.getCanvasPrint();
         </script>
     </head>
 
