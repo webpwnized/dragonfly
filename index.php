@@ -62,10 +62,10 @@
         <script type="text/javascript" nonce="efe3f3d7e23b979ae212c5092469ce195401701a71a00eba0f4f955a068b05e2">
 
             // via CommonJS imports:
-            const { ClientJS } = require('clientjs');
+            //const { ClientJS } = require('clientjs');
 
             // in a browser, when using a script tag:
-            //const ClientJS = window.ClientJS;
+            const ClientJS = window.ClientJS;
 
             // Create a new ClientJS object
             const client = new ClientJS();
