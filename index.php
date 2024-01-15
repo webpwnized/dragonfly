@@ -79,45 +79,23 @@
                     window.document.getElementById("id12").innerText = client.getCPU();
                     window.document.getElementById("id13").innerText = client.isMobile();
                     window.document.getElementById("id14").innerText = client.isMobileMajor();
-
-                    client.isMobileAndroid();
-                    client.isMobileOpera();
-                    client.isMobileWindows();
-                    client.isMobileBlackBerry();
-
-                    client.isMobileIOS();
-                    client.isIphone();
-                    client.isIpad();
-                    client.isIpod();
-
-                    client.getScreenPrint();
-                    client.getColorDepth();
-                    client.getCurrentResolution();
-                    client.getAvailableResolution();
-                    client.getDeviceXDPI();
-                    client.getDeviceYDPI();
-
-                    client.getPlugins();
-                    client.isSilverlight();
-                    client.getSilverlightVersion();
-
-                    client.getMimeTypes();
-                    client.isMimeTypes();
-
-                    client.isFont();
-                    client.getFonts();
-
-                    client.isLocalStorage();
-                    client.isSessionStorage();
-                    client.isCookie();
-
-                    client.getTimeZone();
-
-                    client.getLanguage();
-                    client.getSystemLanguage();
-
-                    client.isCanvas();
-                    client.getCanvasPrint();
+                    window.document.getElementById("id15").innerText = client.getScreenPrint();
+                    window.document.getElementById("id16").innerText = client.getColorDepth();
+                    window.document.getElementById("id17").innerText = client.getCurrentResolution();
+                    window.document.getElementById("id18").innerText = client.getAvailableResolution();
+                    window.document.getElementById("id19").innerText = client.getDeviceXDPI();
+                    window.document.getElementById("id20").innerText = client.getDeviceYDPI();
+                    window.document.getElementById("id21").innerText = client.getPlugins();
+                    window.document.getElementById("id22").innerText = client.getSilverlightVersion();
+                    window.document.getElementById("id23").innerText = client.getMimeTypes();
+                    window.document.getElementById("id24").innerText = client.getFonts();
+                    window.document.getElementById("id25").innerText = client.isLocalStorage();
+                    window.document.getElementById("id26").innerText = client.isSessionStorage();
+                    window.document.getElementById("id27").innerText = client.isCookie();
+                    window.document.getElementById("id28").innerText = client.getTimeZone();
+                    window.document.getElementById("id29").innerText = client.getLanguage();
+                    window.document.getElementById("id30").innerText = client.getSystemLanguage();
+                    window.document.getElementById("id31").innerText = client.getCanvasPrint();
                 }
             });
 
@@ -172,7 +150,6 @@
                     <th>Operating System Version</th>
                     <td><span id="id8"></span></td>
                 </tr>
-
                 <tr>
                     <th>Device</th>
                     <td><span id="id9"></span></td>
@@ -196,6 +173,74 @@
                 <tr>
                     <th>Mobile Vendor</th>
                     <td><span id="id14"></span></td>
+                </tr>
+                <tr>
+                    <th>Screen Print</th>
+                    <td><span id="id15"></span></td>
+                </tr>
+                <tr>
+                    <th>Color Depth</th>
+                    <td><span id="id16"></span></td>
+                </tr>
+                <tr>
+                    <th>Current Resolution</th>
+                    <td><span id="id17"></span></td>
+                </tr>
+                <tr>
+                    <th>Available Resolution</th>
+                    <td><span id="id18"></span></td>
+                </tr>
+                <tr>
+                    <th>Device XPDI</th>
+                    <td><span id="id19"></span></td>
+                </tr>
+                <tr>
+                    <th>Device YPDI</th>
+                    <td><span id="id20"></span></td>
+                </tr>
+                <tr>
+                    <th>Plugins</th>
+                    <td><span id="id21"></span></td>
+                </tr>
+                <tr>
+                    <th>Silverlight Version</th>
+                    <td><span id="id22"></span></td>
+                </tr>
+                <tr>
+                    <th>Mime Types</th>
+                    <td><span id="id23"></span></td>
+                </tr>
+                <tr>
+                    <th>Fonts</th>
+                    <td><span id="id24"></span></td>
+                </tr>
+                <tr>
+                    <th>Local Storage</th>
+                    <td><span id="id25"></span></td>
+                </tr>
+                <tr>
+                    <th>Session Storage</th>
+                    <td><span id="id26"></span></td>
+                </tr>
+                <tr>
+                    <th>Cookies</th>
+                    <td><span id="id27"></span></td>
+                </tr>
+                <tr>
+                    <th>Time Zone</th>
+                    <td><span id="id28"></span></td>
+                </tr>
+                <tr>
+                    <th>Language</th>
+                    <td><span id="id29"></span></td>
+                </tr>
+                <tr>
+                    <th>System Language</th>
+                    <td><span id="id30"></span></td>
+                </tr>
+                <tr>
+                    <th>Canvas Print</th>
+                    <td><span id="id31"></span></td>
                 </tr>
             </tbody>
         </table>
