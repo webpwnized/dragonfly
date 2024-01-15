@@ -60,11 +60,12 @@
             /* Credit to https://github.com/JackSpirou/ClientJS?tab=readme-ov-file#bundles */
         </script>
         <script type="text/javascript" nonce="efe3f3d7e23b979ae212c5092469ce195401701a71a00eba0f4f955a068b05e2">
+            const ClientJS = window.ClientJS;
+
             const client = new ClientJS();
 
             alert(client.getBrowserData());
-            client.getFingerprint();
-            client.getCustomFingerprint();
+            alert(client.getFingerprint());
 
             client.getUserAgent();
             client.getUserAgentLowerCase();
