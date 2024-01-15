@@ -70,11 +70,8 @@
                     // Create a new ClientJS object
                     const client = new ClientJS();
 
-                    // Get the client's fingerprint id
-                    const fingerprint = client.getFingerprint();
-
                     // Print the 32bit hash id to the console
-                    console.log(fingerprint);
+                    window.document.getElementById("id1").innerText = client.getFingerprint();
 
                     console.log(client.getBrowserData());
                     console.log(client.getFingerprint());
@@ -173,6 +170,10 @@
                 <tr>
                     <th>Forwarded For</th>
                     <td><?php echo htmlspecialchars($l_forwarded_for); ?></td>
+                </tr>
+                <tr>
+                    <th>Browser Tracking Fingerprint</th>
+                    <td><span id="id1"></span></td>
                 </tr>
             </tbody>
         </table>
