@@ -56,6 +56,38 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Dragonfly</title>
         <link rel="stylesheet" href="css/styles.css">
+        <script type="text/javascript" src="javascript/imprint.min.js"></script>
+        <script type="text/javascript">
+            var browserTests = [
+                "audio",
+                "availableScreenResolution",
+                "canvas",
+                "colorDepth",
+                "cookies",
+                "cpuClass",
+                "deviceDpi",
+                "doNotTrack",
+                "indexedDb",
+                "installedFonts",
+                "language",
+                "localIp",
+                "localStorage",
+                "pixelRatio",
+                "platform",
+                "plugins",
+                "processorCores",
+                "screenResolution",
+                "sessionStorage",
+                "timezoneOffset",
+                "touchSupport",
+                "userAgent",
+                "webGl"
+            ];
+
+            imprint.test(browserTests).then(function(result){
+            console.log(result);
+            });
+        </script>
     </head>
 
     <body class="content">
