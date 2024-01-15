@@ -56,6 +56,10 @@
         </script>
         <script type="text/javascript" nonce="efe3f3d7e23b979ae212c5092469ce195401701a71a00eba0f4f955a068b05e2">
 
+            String.prototype.left = function(n) {
+                return this.substr(0,n);
+            };
+
             document.addEventListener('readystatechange', event => {
                 // When window loaded ( external resources are loaded too- `css`,`src`, etc...) 
                 if (event.target.readyState === "complete") {
@@ -95,7 +99,7 @@
                     window.document.getElementById("id28").innerText = client.getTimeZone();
                     window.document.getElementById("id29").innerText = client.getLanguage();
                     window.document.getElementById("id30").innerText = client.getSystemLanguage();
-                    window.document.getElementById("id31").innerText = client.getCanvasPrint();
+                    window.document.getElementById("id31").innerText = client.getCanvasPrint().left(100);
                 }
             });
 
