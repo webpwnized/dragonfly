@@ -56,11 +56,34 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Dragonfly</title>
         <link rel="stylesheet" href="css/styles.css">
-        <script type="text/javascript" src="javascript/client.base.min.js">
+        <script type="text/javascript" src="javascript/client..min.js">
             /* Credit to https://github.com/JackSpirou/ClientJS?tab=readme-ov-file#bundles */
         </script>
-    </head>
+        <script type="text/javascript" nonce="efe3f3d7e23b979ae212c5092469ce195401701a71a00eba0f4f955a068b05e2">
 
+            function fingerprintClient(/*void*/) {
+                // Import Module
+                const ClientJS = window.ClientJS;
+
+                // Create a new ClientJS object
+                const client = new ClientJS();
+
+                // Get the client's fingerprint id
+                const fingerprint = client.getFingerprint();
+
+                // Print the 32bit hash id to the console
+                console.log(fingerprint);
+            };
+
+            document.addEventListener('readystatechange', event => { 
+                // When window loaded ( external resources are loaded too- `css`,`src`, etc...) 
+                if (event.target.readyState === "complete") {
+                    fingerprintClient();
+                }
+            });
+            
+        </script>
+    </head>
     <body class="content">
         <table class="styled-table">
             <thead>
@@ -85,24 +108,4 @@
             </tbody>
         </table>
     </body>
-    <script type="text/javascript" nonce="efe3f3d7e23b979ae212c5092469ce195401701a71a00eba0f4f955a068b05e2">
-
-// via CommonJS imports:
-//const { ClientJS } = require('clientjs');
-
-// in a browser, when using a script tag:
-const ClientJS = window.ClientJS;
-
-// Create a new ClientJS object
-const client = new ClientJS();
-
-// Get the client's fingerprint id
-const fingerprint = client.getFingerprint();
-
-// Print the 32bit hash id to the console
-console.log(fingerprint);
-
-
-</script>
-
 </html>
