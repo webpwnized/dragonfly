@@ -56,7 +56,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Dragonfly</title>
         <link rel="stylesheet" href="css/styles.css">
-        <script type="text/javascript" src="javascript/client.base.min.js">
+        <script type="text/javascript" src="javascript/console.log(client.base.min.js">
             /* Credit to https://github.com/JackSpirou/ClientJS?tab=readme-ov-file#bundles */
         </script>
         <script type="text/javascript" nonce="efe3f3d7e23b979ae212c5092469ce195401701a71a00eba0f4f955a068b05e2">
@@ -76,78 +76,78 @@
                     // Print the 32bit hash id to the console
                     console.log(fingerprint);
 
-                    client.getBrowserData();
-                    client.getFingerprint();
+                    console.log(client.getBrowserData());
+                    console.log(client.getFingerprint());
 
-                    client.getUserAgent();
-                    client.getUserAgentLowerCase();
+                    console.log(client.getUserAgent());
+                    console.log(client.getUserAgentLowerCase());
 
-                    client.getBrowser();
-                    client.getBrowserVersion();
-                    client.getBrowserMajorVersion();
-                    client.isIE();
-                    client.isChrome();
-                    client.isFirefox();
-                    client.isSafari();
-                    client.isOpera();
+                    console.log(client.getBrowser());
+                    console.log(client.getBrowserVersion());
+                    console.log(client.getBrowserMajorVersion());
+                    console.log(client.isIE());
+                    console.log(client.isChrome());
+                    console.log(client.isFirefox());
+                    console.log(client.isSafari());
+                    console.log(client.isOpera());
 
-                    client.getEngine();
-                    client.getEngineVersion();
+                    console.log(client.getEngine());
+                    console.log(client.getEngineVersion());
 
-                    client.getOS();
-                    client.getOSVersion();
-                    client.isWindows();
-                    client.isMac();
-                    client.isLinux();
-                    client.isUbuntu();
-                    client.isSolaris();
+                    console.log(client.getOS());
+                    console.log(client.getOSVersion());
+                    console.log(client.isWindows());
+                    console.log(client.isMac());
+                    console.log(client.isLinux());
+                    console.log(client.isUbuntu());
+                    console.log(client.isSolaris());
 
-                    client.getDevice();
-                    client.getDeviceType();
-                    client.getDeviceVendor();
+                    console.log(client.getDevice());
+                    console.log(client.getDeviceType());
+                    console.log(client.getDeviceVendor());
 
-                    client.getCPU();
+                    console.log(client.getCPU());
 
-                    client.isMobile();
-                    client.isMobileMajor();
-                    client.isMobileAndroid();
-                    client.isMobileOpera();
-                    client.isMobileWindows();
-                    client.isMobileBlackBerry();
+                    console.log(client.isMobile());
+                    console.log(client.isMobileMajor());
+                    console.log(client.isMobileAndroid());
+                    console.log(client.isMobileOpera());
+                    console.log(client.isMobileWindows());
+                    console.log(client.isMobileBlackBerry());
 
-                    client.isMobileIOS();
-                    client.isIphone();
-                    client.isIpad();
-                    client.isIpod();
+                    console.log(client.isMobileIOS());
+                    console.log(client.isIphone());
+                    console.log(client.isIpad());
+                    console.log(client.isIpod());
 
-                    client.getScreenPrint();
-                    client.getColorDepth();
-                    client.getCurrentResolution();
-                    client.getAvailableResolution();
-                    client.getDeviceXDPI();
-                    client.getDeviceYDPI();
+                    console.log(client.getScreenPrint());
+                    console.log(client.getColorDepth());
+                    console.log(client.getCurrentResolution());
+                    console.log(client.getAvailableResolution());
+                    console.log(client.getDeviceXDPI());
+                    console.log(client.getDeviceYDPI());
 
-                    client.getPlugins();
-                    client.isSilverlight();
-                    client.getSilverlightVersion();
+                    console.log(client.getPlugins());
+                    console.log(client.isSilverlight());
+                    console.log(client.getSilverlightVersion());
 
-                    client.getMimeTypes();
-                    client.isMimeTypes();
+                    console.log(client.getMimeTypes());
+                    console.log(client.isMimeTypes());
 
-                    client.isFont();
-                    client.getFonts();
+                    console.log(client.isFont());
+                    console.log(client.getFonts());
 
-                    client.isLocalStorage();
-                    client.isSessionStorage();
-                    client.isCookie();
+                    console.log(client.isLocalStorage());
+                    console.log(client.isSessionStorage());
+                    console.log(client.isCookie());
 
-                    client.getTimeZone();
+                    console.log(client.getTimeZone());
 
-                    client.getLanguage();
-                    client.getSystemLanguage();
+                    console.log(client.getLanguage());
+                    console.log(client.getSystemLanguage());
 
-                    client.isCanvas();
-                    client.getCanvasPrint();
+                    console.log(client.isCanvas());
+                    console.log(client.getCanvasPrint());
                 }
             });
 
