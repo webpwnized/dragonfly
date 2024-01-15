@@ -78,7 +78,6 @@
 
                     client.getBrowserData();
                     client.getFingerprint();
-                    client.getCustomFingerprint(...);
 
                     client.getUserAgent();
                     client.getUserAgentLowerCase();
