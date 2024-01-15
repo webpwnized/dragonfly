@@ -61,12 +61,13 @@
         </script>
         <script type="text/javascript" nonce="efe3f3d7e23b979ae212c5092469ce195401701a71a00eba0f4f955a068b05e2">
 
-            function fingerprintClient(/*void*/) {
-                // Import Module
-                const ClientJS = window.ClientJS;
+            // Import Module
+            const ClientJS = window.ClientJS;
 
-                // Create a new ClientJS object
-                const client = new ClientJS();
+            // Create a new ClientJS object
+            const client = new ClientJS();
+
+            function fingerprintClient(/*void*/) {
 
                 // Get the client's fingerprint id
                 const fingerprint = client.getFingerprint();
@@ -81,7 +82,7 @@
                     fingerprintClient();
                 }
             });
-            
+
         </script>
     </head>
     <body class="content">
