@@ -108,7 +108,7 @@
     <body class="content">
         <p`>
             <img src="images/blue-dragonfly-icon.jpg" height="75px" width="75px" />
-            <h1>Dragonfly</h1>
+            Dragonfly
         </p>
         <table class="styled-table">
             <thead>
