@@ -106,10 +106,10 @@
         </script>
     </head>
     <body class="content">
-        <p`>
+        <div class="page-header">
             <img src="images/blue-dragonfly-icon.jpg" height="75px" width="75px" />
-            Dragonfly
-        </p>
+            <span>Dragonfly</span>
+        </div>
         <table class="styled-table">
             <thead>
                 <tr>
