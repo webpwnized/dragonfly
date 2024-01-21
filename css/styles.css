@@ -29,6 +29,9 @@
     padding: 12px 15px;
     text-align: left;
     font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .styled-table td {

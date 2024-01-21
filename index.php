@@ -135,48 +135,20 @@
                     <td><span id="id3"></span></td>
                 </tr>
                 <tr>
-                    <th>Browser Version</th>
-                    <td><span id="id4"></span></td>
-                </tr>
-                <tr>
                     <th>Browser Engine</th>
-                    <td><span id="id5"></span></td>
+                    <td>
+                        <span id="id7"></span>&nbsp;&lpar;<span id="id8"></span>&rpar;&nbsp;
+                        <span id="id5"></span>&nbsp;
+                        <span id="id6"></span>
+                    </td>
                 </tr>
                 <tr>
-                    <th>Browser Engine Version</th>
-                    <td><span id="id6"></span></td>
-                </tr>
-                <tr>
-                    <th>Operating System</th>
-                    <td><span id="id7"></span></td>
-                </tr>
-                <tr>
-                    <th>Operating System Version</th>
-                    <td><span id="id8"></span></td>
-                </tr>
-                <tr>
-                    <th>Device</th>
-                    <td><span id="id9"></span></td>
-                </tr>
-                <tr>
-                    <th>Device Type</th>
-                    <td><span id="id10"></span></td>
-                </tr>
-                <tr>
-                    <th>Device Vendor</th>
-                    <td><span id="id11"></span></td>
+                    <th>Plugins</th>
+                    <td><span id="id21"></span></td>
                 </tr>
                 <tr>
                     <th>CPU</th>
                     <td><span id="id12"></span></td>
-                </tr>
-                <tr>
-                    <th>Is Mobile</th>
-                    <td><span id="id13"></span></td>
-                </tr>
-                <tr>
-                    <th>Mobile Vendor</th>
-                    <td><span id="id14"></span></td>
                 </tr>
                 <tr>
                     <th>Screen Print</th>
@@ -193,22 +165,6 @@
                 <tr>
                     <th>Available Resolution</th>
                     <td><span id="id18"></span></td>
-                </tr>
-                <tr>
-                    <th>Device XPDI</th>
-                    <td><span id="id19"></span></td>
-                </tr>
-                <tr>
-                    <th>Device YPDI</th>
-                    <td><span id="id20"></span></td>
-                </tr>
-                <tr>
-                    <th>Plugins</th>
-                    <td><span id="id21"></span></td>
-                </tr>
-                <tr>
-                    <th>Silverlight Version</th>
-                    <td><span id="id22"></span></td>
                 </tr>
                 <tr>
                     <th>Mime Types</th>
@@ -245,6 +201,38 @@
                 <tr>
                     <th>Canvas Print</th>
                     <td><span id="id31"></span></td>
+                </tr>
+                <tr>
+                    <th>Device XPDI</th>
+                    <td><span id="id19"></span></td>
+                </tr>
+                <tr>
+                    <th>Device YPDI</th>
+                    <td><span id="id20"></span></td>
+                </tr>
+                <tr>
+                    <th>Silverlight Version</th>
+                    <td><span id="id22"></span></td>
+                </tr>
+                <tr>
+                    <th>Device</th>
+                    <td><span id="id9"></span></td>
+                </tr>
+                <tr>
+                    <th>Device Type</th>
+                    <td><span id="id10"></span></td>
+                </tr>
+                <tr>
+                    <th>Device Vendor</th>
+                    <td><span id="id11"></span></td>
+                </tr>
+                <tr>
+                    <th>Is Mobile</th>
+                    <td><span id="id13"></span></td>
+                </tr>
+                <tr>
+                    <th>Mobile Vendor</th>
+                    <td><span id="id14"></span></td>
                 </tr>
             </tbody>
         </table>
