@@ -106,8 +106,10 @@
         </script>
     </head>
     <body class="content">
-        <img src="images/blue-dragonfly-icon.jpg" height="30px" width="30px" />
-        <span><h1>Dragonfly</h1></span>
+        <span>
+            <img src="images/blue-dragonfly-icon.jpg" height="75px" width="75px" />
+            <h1>Dragonfly</h1>
+        </span>
         <table class="styled-table">
             <thead>
                 <tr>
