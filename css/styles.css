@@ -4,9 +4,8 @@
     margin: auto;
 }
 
-/* Header Row */
-.span h1 {
-    display: inline-block;
+.img {
+    vertical-align: middle;
 }
 
 /* Tables */
