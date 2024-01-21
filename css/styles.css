@@ -4,6 +4,11 @@
     margin: auto;
 }
 
+/* Header Row */
+.span h1 {
+    display: inline-block;
+}
+
 /* Tables */
 .styled-table {
     table-layout:fixed;
