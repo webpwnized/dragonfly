@@ -4,13 +4,13 @@
     margin: auto;
 }
 
-.page-header img {
-    vertical-align: middle;
-}
-
-.page-header span {
+.page-header {
     font-size: large;
     font-weight: bold;
+}
+
+.page-header img {
+    vertical-align: middle;
 }
 
 /* Tables */
