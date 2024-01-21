@@ -106,7 +106,7 @@
     </head>
     <body class="content">
         <div class="page-header">
-            <img src="images/blue-dragonfly-icon.jpg" height="100px" width="100px" alt="" />
+            <img src="images/blue-dragonfly-icon.jpg" height="150px" width="150px" alt="" />
             <span>Dragonfly</span>
         </div>
         <table class="styled-table">
