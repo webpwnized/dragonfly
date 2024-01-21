@@ -72,7 +72,6 @@
                     window.document.getElementById("id1").innerText = client.getFingerprint();
                     window.document.getElementById("id2").innerText = client.getUserAgent();
                     window.document.getElementById("id3").innerText = client.getBrowser();
-                    window.document.getElementById("id4").innerText = client.getBrowserVersion();
                     window.document.getElementById("id5").innerText = client.getEngine();
                     window.document.getElementById("id6").innerText = client.getEngineVersion();
                     window.document.getElementById("id7").innerText = client.getOS();
