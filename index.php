@@ -106,6 +106,7 @@
         </script>
     </head>
     <body class="content">
+        <img src="images/blue-dragonfly-icon.jpg" />
         <table class="styled-table">
             <thead>
                 <tr>
