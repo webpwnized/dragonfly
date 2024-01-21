@@ -83,11 +83,6 @@
                     window.document.getElementById("id13").innerText = client.isMobile();
                     window.document.getElementById("id14").innerText = client.isMobileMajor();
                     window.document.getElementById("id15").innerText = client.getScreenPrint();
-                    window.document.getElementById("id16").innerText = client.getColorDepth();
-                    window.document.getElementById("id17").innerText = client.getCurrentResolution();
-                    window.document.getElementById("id18").innerText = client.getAvailableResolution();
-                    window.document.getElementById("id19").innerText = client.getDeviceXDPI();
-                    window.document.getElementById("id20").innerText = client.getDeviceYDPI();
                     window.document.getElementById("id21").innerText = client.getPlugins();
                     window.document.getElementById("id22").innerText = client.getSilverlightVersion();
                     window.document.getElementById("id23").innerText = client.getMimeTypes();
@@ -134,13 +129,10 @@
                     <td><span id="id2"></span></td>
                 </tr>
                 <tr>
-                    <th>Browser</th>
-                    <td><span id="id3"></span></td>
-                </tr>
-                <tr>
                     <th>Browser Engine</th>
                     <td>
                         <span id="id7"></span>&nbsp;&lpar;<span id="id8"></span>&rpar;&nbsp;
+                        <span id="id3"></span>&nbsp;
                         <span id="id5"></span>&nbsp;
                         <span id="id6"></span>
                     </td>
@@ -156,18 +148,6 @@
                 <tr>
                     <th>Screen Print</th>
                     <td><span id="id15"></span></td>
-                </tr>
-                <tr>
-                    <th>Color Depth</th>
-                    <td><span id="id16"></span></td>
-                </tr>
-                <tr>
-                    <th>Current Resolution</th>
-                    <td><span id="id17"></span></td>
-                </tr>
-                <tr>
-                    <th>Available Resolution</th>
-                    <td><span id="id18"></span></td>
                 </tr>
                 <tr>
                     <th>Mime Types</th>
@@ -204,14 +184,6 @@
                 <tr>
                     <th>Canvas Print</th>
                     <td><span id="id31"></span></td>
-                </tr>
-                <tr>
-                    <th>Device XPDI</th>
-                    <td><span id="id19"></span></td>
-                </tr>
-                <tr>
-                    <th>Device YPDI</th>
-                    <td><span id="id20"></span></td>
                 </tr>
                 <tr>
                     <th>Silverlight Version</th>
