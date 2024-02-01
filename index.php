@@ -1,22 +1,27 @@
 <?php
 
     /* Enable HSTS - Only available with HTTPS*/
-    //header("Strict-Transport-Security: max-age=31536000; includeSubDomains", TRUE);
+    //header("Strict-Transport-Security: max-age=31536000; includeSubDomains", true);
 
     // HTTP/1.1 cache control
-    header('Cache-Control: no-store, no-cache', TRUE);
+    header('Cache-Control: no-store, no-cache', true);
 
     /* Cross-frame scripting and click-jacking */
-    header('X-FRAME-OPTIONS: DENY', TRUE);
+    header('X-FRAME-OPTIONS: DENY', true);
 
     /* Client-side Script injection */
-    header("Content-Security-Policy: default-src 'self'; script-src 'self' 'nonce-efe3f3d7e23b979ae212c5092469ce195401701a71a00eba0f4f955a068b05e2'", TRUE);
+
+    $lContentSecurityPolicy = 
+        "Content-Security-Policy: " .
+        "default-src 'self'; script-src 'self' " .
+        "'nonce-efe3f3d7e23b979ae212c5092469ce195401701a71a00eba0f4f955a068b05e2'";
+    header($lContentSecurityPolicy, true);
 
     /* Content sniffing */
-    header('X-Content-Type-Options: nosniff', TRUE);
+    header('X-Content-Type-Options: nosniff', true);
 
     /* Referrer Policy */
-    header('Referrer-Policy: no-referrer', TRUE);
+    header('Referrer-Policy: no-referrer', true);
 
     /* Server version banners */
     header_remove('X-Powered-By');
@@ -29,7 +34,7 @@
         $l_client_ip_address = $_SERVER['HTTP_CLIENT_IP'];
     } elseif (isset($_SERVER['REMOTE_ADDR'])){
         $l_client_ip_address = $_SERVER['REMOTE_ADDR'];
-    };
+    }
     
     if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])){
         $l_forwarded_for = $_SERVER['HTTP_X_FORWARDED_FOR'];
@@ -39,7 +44,7 @@
         $l_forwarded_for = $_SERVER['HTTP_FORWARDED_FOR'];
     } elseif (isset($_SERVER['HTTP_FORWARDED'])){
         $l_forwarded_for = $_SERVER['HTTP_FORWARDED'];
-    };  
+    }
 
 ?>
 
@@ -61,7 +66,7 @@
             };
 
             document.addEventListener('readystatechange', event => {
-                // When window loaded ( external resources are loaded too- `css`,`src`, etc...) 
+                // When window loaded ( external resources are loaded too- `css`,`src`, etc...)
                 if (event.target.readyState === "complete") {
                     // in a browser, when using a script tag:
                     const ClientJS = window.ClientJS;
@@ -105,31 +110,32 @@
             <span>Dragonfly</span>
         </div>
         <table class="styled-table">
+            <caption>Browser Data</caption>
             <thead>
                 <tr>
-                    <th>Data Point</th>
-                    <th>Value</th>
+                    <th scope="row">Data Point</th>
+                    <th scope="row">Value</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <th>HTTP Client IP Address</th>
+                    <th scope="row">HTTP Client IP Address</th>
                     <td><?php echo htmlspecialchars($l_client_ip_address); ?></td>
                 </tr>
                 <tr>
-                    <th>Forwarded For</th>
+                    <th scope="row">Forwarded For</th>
                     <td><?php echo htmlspecialchars($l_forwarded_for); ?></td>
                 </tr>
                 <tr>
-                    <th>Browser Tracking Fingerprint</th>
+                    <th scope="row">Browser Tracking Fingerprint</th>
                     <td><span id="id1"></span></td>
                 </tr>
                 <tr>
-                    <th>User Agent</th>
+                    <th scope="row">User Agent</th>
                     <td><span id="id2"></span></td>
                 </tr>
                 <tr>
-                    <th>Browser Engine</th>
+                    <th scope="row">Browser Engine</th>
                     <td>
                         <span id="id7"></span>&nbsp;&lpar;<span id="id8"></span>&rpar;&nbsp;
                         <span id="id3"></span>&nbsp;
@@ -138,75 +144,75 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Plugins</th>
+                    <th scope="row">Plugins</th>
                     <td><span id="id21"></span></td>
                 </tr>
                 <tr>
-                    <th>CPU</th>
+                    <th scope="row">CPU</th>
                     <td><span id="id12"></span></td>
                 </tr>
                 <tr>
-                    <th>Screen Print</th>
+                    <th scope="row">Screen Print</th>
                     <td><span id="id15"></span></td>
                 </tr>
                 <tr>
-                    <th>Mime Types</th>
+                    <th scope="row">Mime Types</th>
                     <td><span id="id23"></span></td>
                 </tr>
                 <tr>
-                    <th>Fonts</th>
+                    <th scope="row">Fonts</th>
                     <td><span id="id24"></span></td>
                 </tr>
                 <tr>
-                    <th>Local Storage</th>
+                    <th scope="row">Local Storage</th>
                     <td><span id="id25"></span></td>
                 </tr>
                 <tr>
-                    <th>Session Storage</th>
+                    <th scope="row">Session Storage</th>
                     <td><span id="id26"></span></td>
                 </tr>
                 <tr>
-                    <th>Cookies</th>
+                    <th scope="row">Cookies</th>
                     <td><span id="id27"></span></td>
                 </tr>
                 <tr>
-                    <th>Time Zone</th>
+                    <th scope="row">Time Zone</th>
                     <td><span id="id28"></span></td>
                 </tr>
                 <tr>
-                    <th>Language</th>
+                    <th scope="row">Language</th>
                     <td><span id="id29"></span></td>
                 </tr>
                 <tr>
-                    <th>System Language</th>
+                    <th scope="row">System Language</th>
                     <td><span id="id30"></span></td>
                 </tr>
                 <tr>
-                    <th>Canvas Print</th>
+                    <th scope="row">Canvas Print</th>
                     <td><span id="id31"></span></td>
                 </tr>
                 <tr>
-                    <th>Silverlight Version</th>
+                    <th scope="row">Silverlight Version</th>
                     <td><span id="id22"></span></td>
                 </tr>
                 <tr>
-                    <th>Device</th>
+                    <th scope="row">Device</th>
                     <td><span id="id9"></span></td>
                 </tr>
                 <tr>
-                    <th>Device Type</th>
+                    <th scope="row">Device Type</th>
                     <td><span id="id10"></span></td>
                 </tr>
                 <tr>
-                    <th>Device Vendor</th>
+                    <th scope="row">Device Vendor</th>
                     <td><span id="id11"></span></td>
                 </tr>
                 <tr>
-                    <th>Is Mobile</th>
+                    <th scope="row">Is Mobile</th>
                     <td><span id="id13"></span></td>
                 </tr>
                 <tr>
-                    <th>Mobile Vendor</th>
+                    <th scope="row">Mobile Vendor</th>
                     <td><span id="id14"></span></td>
                 </tr>
             </tbody>
