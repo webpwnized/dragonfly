@@ -23,6 +23,7 @@ RUN apt-get update && \
 # ############################  #
 
 # Copy the application project to Apache web files directory
+WORKDIR .
 ADD dragonfly /var/www/dragonfly
 
 # ######################## #
