@@ -23,7 +23,7 @@ RUN apt-get update && \
 # ############################  #
 
 # Copy the application project to Apache web files directory
-ADD ${{ github.workspace }}/dragonfly /var/www/dragonfly
+ADD dragonfly /var/www/dragonfly
 
 # ######################## #
 # Configure the web server #
@@ -43,4 +43,5 @@ HEALTHCHECK --interval=30s --timeout=3s \
 # This exposes HTTP
 EXPOSE 80
 
-USER www-data
+# USER command not used in GitHub Actions
+# USER www-data
