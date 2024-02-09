@@ -23,8 +23,7 @@ RUN apt-get update && \
 # ############################  #
 
 # Copy the application project to Apache web files directory
-WORKDIR ${{ GitHub.GITHUB_WORKSPACE }}
-ADD dragonfly /var/www/dragonfly
+ADD $GITHUB_WORKSPACE/dragonfly /var/www/dragonfly
 
 # ######################## #
 # Configure the web server #
