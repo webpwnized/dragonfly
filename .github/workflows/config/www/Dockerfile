@@ -23,6 +23,10 @@ RUN apt-get update && \
 # ############################  #
 
 # Copy the application project to Apache web files directory
+# Note: The $GITHUB_WORKSPACE environment variable is only valid in a Github Action
+# $GITHUB_WORKSPACE: 
+#   The default working directory on the runner for steps, and the default 
+#   location of your repository when using the checkout action
 ADD $GITHUB_WORKSPACE/dragonfly /var/www/dragonfly
 
 # ######################## #
