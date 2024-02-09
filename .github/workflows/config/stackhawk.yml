@@ -1,0 +1,10 @@
+# -- stackhawk configuration for mutillidae --
+app:
+  applicationId: c6d7fc3f-699d-4ea3-acb9-b47b6d63f222 # <- Make this YOUR Application ID from YOUR StackHawk account
+  env: Dragonfly-Development # (required)
+  host: http://127.0.0.1:8888 # (required)  
+hawk:
+  spider:
+    base: true
+    seedPaths: ["/index.php"]
+    maxDurationMinutes: 10
