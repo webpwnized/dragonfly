@@ -1,0 +1,22 @@
+# Documentation: https://github.com/compose-spec/compose-spec/blob/master/spec.md
+# Purpose: Build local containers for the Dragonfly environment
+
+version: '3.8'
+services:
+
+# Port 8888 is for DAST scan
+  www:
+    container_name: www
+    image: webpwnized/dragonfly:www
+    build:
+        context: ./www
+        dockerfile: Dockerfile
+    ports:
+      - 127.0.0.1:80:80
+      - 127.0.0.1:8888:80
+    networks:
+      - httpnet
+  
+# Create network segments for the containers to use
+networks:
+    httpnet:
