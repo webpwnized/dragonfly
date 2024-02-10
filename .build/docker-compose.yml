@@ -9,7 +9,7 @@ services:
     container_name: www
     image: webpwnized/dragonfly:www
     build:
-        context: www
+        context: .build/www  # The context starts from the directory that the docker-compose.yml file is in unless adjusted
         dockerfile: Dockerfile
     ports:
       - 127.0.0.1:80:80
