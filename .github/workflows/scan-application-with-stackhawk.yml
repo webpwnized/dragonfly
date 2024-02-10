@@ -53,8 +53,8 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: false
-          context: ${{ github.workspace }}
-          file: ${{ github.workspace }}/.build/${{ env.WEB_CONTAINER_NAME }}/Dockerfile
+          context: .
+          file: .build/${{ env.WEB_CONTAINER_NAME }}/Dockerfile
           load: true
           tags: webpwnized/dragonfly:${{ env.WEB_CONTAINER_NAME }}
 
