@@ -10,9 +10,10 @@ on:
   # Trigger the workflow on-demand through the GitHub Actions interface.
   workflow_dispatch: {}
 
-  # Scan mainline branches (main and development) and report all findings.
+  # Scan development branches and report findings.
   push:
-    branches: ["main", "development"]
+    branches:
+      - 'development'
 
 jobs:
   semgrep:

@@ -5,8 +5,8 @@ name: Scan PHP code with Snyk Code
 on:
   push:
     branches:
-      - main
       - development
+
   pull_request:
     # Trigger when code is pushed or pull requests are opened/updated on 'main' and 'development' branches
 
