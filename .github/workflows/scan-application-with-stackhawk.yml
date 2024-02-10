@@ -43,6 +43,9 @@ jobs:
         with:
           path: dragonfly
 
+      - name: Set up Docker Buildx on the runner
+        run: ls -lah dragonfly
+
       # Step 2: Set up Docker Buildx on the runner.
       # https://github.com/marketplace/actions/build-and-push-docker-images
       - name: Set up Docker Buildx on the runner
