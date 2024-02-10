@@ -13,7 +13,8 @@ on:
 
   # Scan mainline branches (main and development) and report all findings.
   push:
-    branches: ["development"]
+    branches:
+      - development
 
 # Define the jobs that should be executed in this workflow.
 jobs:
@@ -40,7 +41,7 @@ jobs:
       - name: Run Hadolint Scan with SARIF result
         uses: hadolint/hadolint-action@v3.1.0
         with:
-          dockerfile: Dockerfile
+          dockerfile: .build/www/Dockerfile
           # Specify the name of the Dockerfile to be scanned.
           
           recursive: true
