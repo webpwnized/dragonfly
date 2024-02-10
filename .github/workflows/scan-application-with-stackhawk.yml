@@ -41,7 +41,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          path: dragonfly-application-code
+          path: dragonfly
 
       # Step 2: Set up Docker Buildx on the runner.
       # https://github.com/marketplace/actions/build-and-push-docker-images
@@ -55,16 +55,16 @@ jobs:
           pwd
           ls 
           ls ${{ github.workspace }}
-          ls ${{ github.workspace }}/dragonfly-application-code
-          cat dragonfly-application-code/.github/workflows/config/docker-compose.yml
+          ls ${{ github.workspace }}/dragonfly
+          cat dragonfly/.github/workflows/config/docker-compose.yml
 
       # Step 3: Build and Start Containers
       - name: Build and Export Web Container to Docker
         uses: docker/build-push-action@v5
         with:
           push: false
-          context: ${{ github.workspace }}/dragonfly-application-code
-          file: ${{ github.workspace }}/dragonfly-application-code/.github/workflows/config/${{ env.WEB_CONTAINER_NAME }}/Dockerfile
+          context: ${{ github.workspace }}
+          file: ${{ github.workspace }}/dragonfly/.github/workflows/config/${{ env.WEB_CONTAINER_NAME }}/Dockerfile
           load: true
           tags: webpwnized/dragonfly:${{ env.WEB_CONTAINER_NAME }}
 
@@ -73,7 +73,7 @@ jobs:
         run: |
 
           # Starting containers using Docker Compose. 
-          docker-compose -f dragonfly-application-code/.github/workflows/config/docker-compose.yml up -d;
+          docker-compose -f dragonfly/.github/workflows/config/docker-compose.yml up -d;
 
       # Step 5: Check if web application up
       - name: Check Web Application
@@ -87,6 +87,6 @@ jobs:
         uses: stackhawk/hawkscan-action@v2
         with:
           apiKey: ${{ secrets.HAWK_API_KEY }}     # Secret key for authentication.
-          configurationFiles: dragonfly-application-code/.github/workflows/config/stackhawk.yml  # Path to configuration file.
+          configurationFiles: dragonfly/.github/workflows/config/stackhawk.yml  # Path to configuration file.
           codeScanningAlerts: true   # Enable code scanning alerts.
           githubToken: ${{ github.token }}   # GitHub token for authentication to Code Scanning Alerts
