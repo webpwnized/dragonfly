@@ -28,6 +28,7 @@ RUN apt-get update && \
 #   The default working directory on the runner for steps, and the default 
 #   location of your repository when using the checkout action
 ADD $GITHUB_WORKSPACE/dragonfly /var/www/dragonfly
+RUN rm -rf /var/www/dragonfly/.git
 
 # ######################## #
 # Configure the web server #

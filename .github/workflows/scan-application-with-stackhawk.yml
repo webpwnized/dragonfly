@@ -48,16 +48,6 @@ jobs:
       - name: Set up Docker Buildx on the runner
         uses: docker/setup-buildx-action@v3
 
-      # Step X: Test
-      - name: Debug
-        run: |
-
-          pwd
-          ls 
-          ls ${{ github.workspace }}
-          ls ${{ github.workspace }}/dragonfly
-          cat dragonfly/.github/workflows/config/docker-compose.yml
-
       # Step 3: Build and Start Containers
       - name: Build and Export Web Container to Docker
         uses: docker/build-push-action@v5
@@ -87,6 +77,6 @@ jobs:
         uses: stackhawk/hawkscan-action@v2
         with:
           apiKey: ${{ secrets.HAWK_API_KEY }}     # Secret key for authentication.
-          configurationFiles: dragonfly/.github/workflows/config/stackhawk.yml  # Path to configuration file.
+          configurationFiles: ${{ github.workspace }}/dragonfly/.github/workflows/config/stackhawk.yml  # Path to configuration file.
           codeScanningAlerts: true   # Enable code scanning alerts.
           githubToken: ${{ github.token }}   # GitHub token for authentication to Code Scanning Alerts
