@@ -77,6 +77,6 @@ jobs:
         uses: stackhawk/hawkscan-action@v2
         with:
           apiKey: ${{ secrets.HAWK_API_KEY }}     # Secret key for authentication.
-          configurationFiles: ${{ github.workspace }}/dragonfly/.github/workflows/config/stackhawk.yml  # Path to configuration file.
+          configurationFiles: dragonfly/.github/workflows/config/stackhawk.yml  # Path to configuration file.
           codeScanningAlerts: true   # Enable code scanning alerts.
           githubToken: ${{ github.token }}   # GitHub token for authentication to Code Scanning Alerts
