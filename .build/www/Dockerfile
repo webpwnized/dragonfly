@@ -27,7 +27,7 @@ RUN apt-get update && \
 # $GITHUB_WORKSPACE: 
 #   The default working directory on the runner for steps, and the default 
 #   location of your repository when using the checkout action
-ADD $GITHUB_WORKSPACE/dragonfly /var/www/dragonfly
+ADD $GITHUB_WORKSPACE/src /var/www/dragonfly
 
 # ######################## #
 # Configure the web server #
@@ -47,5 +47,5 @@ HEALTHCHECK --interval=30s --timeout=3s \
 # This exposes HTTP
 EXPOSE 80
 
-# USER command not used in GitHub Actions
-# USER www-data
+# USER usually command not used in GitHub Actions
+USER www-data
