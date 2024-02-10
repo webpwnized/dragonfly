@@ -59,6 +59,8 @@ jobs:
           failure-threshold: 'error'
           # Define the threshold for failure based on severity (e.g., 'error').
       
+          verbose: true
+          
       - name: Upload Results to GitHub Advanced Security Dashboard
         uses: github/codeql-action/upload-sarif@main
         with:
