@@ -1,4 +1,9 @@
-#webpwnized/dragonfly:www
+# Container image: webpwnized/dragonfly:www
+# From project root, build with: 
+#   docker build --file .build/www/Dockerfile --tag webpwnized/dragonfly:www .
+#
+# From project root, run with:
+#   docker-compose --file .build/docker-compose.yml up --detach
 
 # Start with recent version of PHP with Apache 
 # https://hub.docker.com/_/php?tab=tags&page=1&ordering=last_updated&name=apache
@@ -27,7 +32,7 @@ RUN apt-get update && \
 # $GITHUB_WORKSPACE: 
 #   The default working directory on the runner for steps, and the default 
 #   location of your repository when using the checkout action
-ADD $GITHUB_WORKSPACE/src /var/www/dragonfly
+ADD src /var/www/dragonfly
 
 # ######################## #
 # Configure the web server #
