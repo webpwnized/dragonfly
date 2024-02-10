@@ -66,7 +66,7 @@ jobs:
           docker-compose --file .build/docker-compose.yml up --detach;
 
       # Step 5: Check if web application up
-      - name: Check Web Application
+      - name: Check if Web Application running
         run: |
 
           # This should return the index.php home page content
