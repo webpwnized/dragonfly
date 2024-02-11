@@ -16,7 +16,7 @@ on:
     branches:
       - 'development'
 
-    # Define environment variables for better organization.
+# Define environment variables for better organization.
 env:
   WEB_CONTAINER_NAME: "www"
 
