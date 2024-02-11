@@ -49,11 +49,16 @@ jobs:
           output_path: .
           output_formats: 'sarif'
           ignore_on_exit: results
+          verbose: true
 
+      # View results
+      - name: View Results
+        run: cat results.sarif
+
+      # Upload the SARIF file with scan results to the GitHub Advanced Security Dashboard.
       - name: Upload Results to GitHub Advanced Security Dashboard
         uses: github/codeql-action/upload-sarif@main
         with:
           sarif_file: results.sarif
           category: "KICS Dockerfile Scan"
         if: always()
-        # Upload the SARIF file with scan results to the GitHub Advanced Security Dashboard.
