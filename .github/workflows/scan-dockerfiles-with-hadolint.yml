@@ -61,6 +61,10 @@ jobs:
       
           verbose: true
           
+      # View results
+      - name: View Results
+        run: cat hadolint-results.sarif
+
       - name: Upload Results to GitHub Advanced Security Dashboard
         uses: github/codeql-action/upload-sarif@main
         with:
