@@ -48,5 +48,5 @@ HEALTHCHECK --interval=30s --timeout=3s \
 # This exposes HTTP
 EXPOSE 80
 
-# USER usually command not used in GitHub Actions
+# USER command usually not used in GitHub Actions
 USER www-data

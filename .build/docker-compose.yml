@@ -1,6 +1,13 @@
 # Documentation: https://github.com/compose-spec/compose-spec/blob/master/spec.md
 # Purpose: Build local containers for the Dragonfly environment
 
+# Container image: webpwnized/dragonfly:www
+# From project root, build with: 
+#   docker build --file .build/www/Dockerfile --tag webpwnized/dragonfly:www .
+#
+# From project root, run with:
+#   docker-compose --file .build/docker-compose.yml up --detach
+
 version: '3.8'
 services:
 
