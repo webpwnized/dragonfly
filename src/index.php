@@ -65,6 +65,43 @@
                 return this.substr(0,n);
             };
 
+            function sanitizeValue (/* any */ pValue) {
+
+                if (pValue === "null" || pValue === null || pValue === "undefined" || pValue === undefined) {
+                    return "";
+                } else if (typeof pValue === 'undefined') {
+                    return "";
+                } else if (pValue === "true" || pValue === true) {
+                    return "Yes";
+                } else if (pValue === "false" || pValue === false) {
+                    return "No";
+                } else {
+                    return pValue;
+                };
+            
+            };
+
+            function outputDataPoint (
+                /*string*/ pSpanId,
+                /*string*/ pKey,
+                /*string*/ pValue) {
+
+                    lSessionStorage = window.sessionStorage;
+
+                    lPreviousValue = sanitizeValue(lSessionStorage.getItem(pKey));
+                    lCurrentValue = sanitizeValue(pValue);
+                    lSpan = window.document.getElementById(pSpanId);    // Get the output span
+                    lSpan.innerText = lCurrentValue;   // Output the value into the span
+
+                    // If the value has changes, change the font color to blue
+                    if (lPreviousValue != lCurrentValue) {
+                        lSpan.style.color = "blue";
+                    };
+
+                    // Store the new value in the HTML5 web storage table
+                    lSessionStorage.setItem(pKey, lCurrentValue);
+            };
+
             document.addEventListener('readystatechange', event => {
                 // When window loaded ( external resources are loaded too- `css`,`src`, etc...)
                 if (event.target.readyState === "complete") {
@@ -74,31 +111,35 @@
                     // Create a new ClientJS object
                     const client = new ClientJS();
 
-                    window.document.getElementById("id1").innerText = client.getFingerprint();
-                    window.document.getElementById("id2").innerText = client.getUserAgent();
-                    window.document.getElementById("id3").innerText = client.getBrowser();
-                    window.document.getElementById("id5").innerText = client.getEngine();
-                    window.document.getElementById("id6").innerText = client.getEngineVersion();
-                    window.document.getElementById("id7").innerText = client.getOS();
-                    window.document.getElementById("id8").innerText = client.getOSVersion();
-                    window.document.getElementById("id9").innerText = client.getDevice();
-                    window.document.getElementById("id10").innerText = client.getDeviceType();
-                    window.document.getElementById("id11").innerText = client.getDeviceVendor();
-                    window.document.getElementById("id12").innerText = client.getCPU();
-                    window.document.getElementById("id13").innerText = client.isMobile();
-                    window.document.getElementById("id14").innerText = client.isMobileMajor();
-                    window.document.getElementById("id15").innerText = client.getScreenPrint();
-                    window.document.getElementById("id21").innerText = client.getPlugins();
-                    window.document.getElementById("id22").innerText = client.getSilverlightVersion();
-                    window.document.getElementById("id23").innerText = client.getMimeTypes();
-                    window.document.getElementById("id24").innerText = client.getFonts();
-                    window.document.getElementById("id25").innerText = client.isLocalStorage();
-                    window.document.getElementById("id26").innerText = client.isSessionStorage();
-                    window.document.getElementById("id27").innerText = client.isCookie();
-                    window.document.getElementById("id28").innerText = client.getTimeZone();
-                    window.document.getElementById("id29").innerText = client.getLanguage();
-                    window.document.getElementById("id30").innerText = client.getSystemLanguage();
-                    window.document.getElementById("id31").innerText = client.getCanvasPrint().left(64);
+                    lClientIP = "<?php echo htmlspecialchars($l_client_ip_address); ?>";
+                    lForwardedFor = "<?php echo htmlspecialchars($l_forwarded_for); ?>";
+
+                    outputDataPoint("id1", "BrowserFingerprint", client.getFingerprint());
+                    outputDataPoint("id32", "ClientIPAddress", lClientIP);
+                    outputDataPoint("id33", "ForwardedFor", lForwardedFor);
+                    outputDataPoint("id2", "UserAgent", client.getUserAgent());
+                    outputDataPoint("id3", "Browser", client.getBrowser());
+                    outputDataPoint("id5", "Engine", client.getEngine());
+                    outputDataPoint("id6", "EngineVersion", client.getEngineVersion());
+                    outputDataPoint("id7", "OS", client.getOS());
+                    outputDataPoint("id9", "Device", client.getDevice());
+                    outputDataPoint("id10", "DeviceType", client.getDeviceType());
+                    outputDataPoint("id11", "DeviceVendor", client.getDeviceVendor());
+                    outputDataPoint("id12", "CPU", client.getCPU());
+                    outputDataPoint("id13", "isMobile", client.isMobile());
+                    outputDataPoint("id14", "isMobileMajor", client.isMobileMajor());
+                    outputDataPoint("id15", "ScreenPrint", client.getScreenPrint());
+                    outputDataPoint("id21", "BrowserPlugins", client.getPlugins());
+                    outputDataPoint("id22", "SilverlightVersion", client.getSilverlightVersion());
+                    outputDataPoint("id23", "MimeTypes", client.getMimeTypes());
+                    outputDataPoint("id24", "Fonts", client.getFonts());
+                    outputDataPoint("id25", "LocalStorage", client.isLocalStorage());
+                    outputDataPoint("id26", "SessionStorage", client.isSessionStorage());
+                    outputDataPoint("id27", "Cookie", client.isCookie());
+                    outputDataPoint("id28", "TimeZone", client.getTimeZone());
+                    outputDataPoint("id29", "Language", client.getLanguage());
+                    outputDataPoint("id30", "SystemLanguage", client.getSystemLanguage());
+                    outputDataPoint("id31", "CanvasPrint", client.getCanvasPrint().left(64));
                 }
             });
 
@@ -110,7 +151,7 @@
             <span>Dragonfly</span>
         </div>
         <table class="styled-table">
-            <caption>Browser Data</caption>
+            <caption></caption>
             <thead>
                 <tr>
                     <th scope="row">Data Point</th>
@@ -120,11 +161,11 @@
             <tbody>
                 <tr>
                     <th scope="row">HTTP Client IP Address</th>
-                    <td><?php echo htmlspecialchars($l_client_ip_address); ?></td>
+                    <td><span id="id32"></span></td>
                 </tr>
                 <tr>
                     <th scope="row">Forwarded For</th>
-                    <td><?php echo htmlspecialchars($l_forwarded_for); ?></td>
+                    <td><span id="id33"></span></td>
                 </tr>
                 <tr>
                     <th scope="row">Browser Tracking Fingerprint</th>
@@ -137,7 +178,7 @@
                 <tr>
                     <th scope="row">Browser Engine</th>
                     <td>
-                        <span id="id7"></span>&nbsp;&lpar;<span id="id8"></span>&rpar;&nbsp;
+                        <span id="id7"></span>&nbsp;
                         <span id="id3"></span>&nbsp;
                         <span id="id5"></span>&nbsp;
                         <span id="id6"></span>
