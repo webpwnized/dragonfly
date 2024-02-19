@@ -65,6 +65,7 @@
                 return this.substr(0,n);
             };
 
+	    // Function to normalize the values
             function sanitizeValue (/* any */ pValue) {
 
                 if (pValue === "null" || pValue === null || pValue === "undefined" || pValue === undefined) {
