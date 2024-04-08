@@ -1,11 +1,14 @@
+/* General Styles */
+
 /* Page Content */
 .content {
     max-width: 960px;
     margin: auto;
 }
 
+/* Page Header */
 .page-header {
-    font-size: 60px;
+    font-size: 2.5rem; /* Equivalent to 40px */
     font-weight: bold;
 }
 
@@ -14,46 +17,42 @@
 }
 
 /* Tables */
+
+/* Styled Table */
 .styled-table {
-    table-layout:fixed;
-    word-wrap:break-word;
+    width: 100%;
     border-collapse: collapse;
-    font-size: 0.9em;
+    font-size: 0.9rem; /* Equivalent to 14px */
     font-family: sans-serif;
-    min-width: 400px;
-    max-width: 100%;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
-/* Table Header Row */
-.styled-table thead tr {
+/* Table Header */
+.styled-table thead {
     background-color: #009879;
     color: #ffffff;
-    text-align: left;
 }
 
-/* Table Cells */
-.styled-table tr th {
+/* Table Header Cell */
+.styled-table th {
     padding: 12px 15px;
-    text-align: left;
     font-weight: bold;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.styled-table td {
-    padding: 12px 15px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-/* Table Rows */
-.styled-table tbody tr {
+/* Table Body */
+.styled-table tbody {
     border-bottom: 1px solid #dddddd;
 }
 
-/* Even Table Rows */
+/* Table Row */
+.styled-table tbody tr {
+    background-color: #ffffff;
+}
+
+/* Even Table Row */
 .styled-table tbody tr:nth-of-type(even) {
     background-color: #f3f3f3;
 }
@@ -63,7 +62,7 @@
     border-bottom: 2px solid #009879;
 }
 
-/* Active Row */
+/* Active Table Row */
 .styled-table tbody tr.active-row {
     font-weight: bold;
     color: #009879;
