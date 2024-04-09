@@ -52,12 +52,9 @@
         };
 
         function sanitizeValue(pValue) {
-            alert(typeof pValue);
-            alert(pValue);
-            
-            if ($pValue === "null" || $pValue === null || $pValue === "undefined" || $pValue === undefined) {
+            if (typeof pValue === 'undefined') {
                 return "";
-            } else if (typeof pValue === 'undefined') {
+            } else if ($pValue === "null" || $pValue === null || $pValue === "undefined" || $pValue === undefined) {
                 return "";
             } else if ($pValue === "true" || $pValue === true) {
                 return "Yes";
