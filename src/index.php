@@ -54,14 +54,14 @@
         function sanitizeValue(pValue) {
             if (typeof pValue === 'undefined') {
                 return "";
-            } else if ($pValue === "null" || $pValue === null || $pValue === "undefined" || $pValue === undefined) {
+            } else if (pValue === "null" || pValue === null || pValue === "undefined" || pValue === undefined) {
                 return "";
-            } else if ($pValue === "true" || $pValue === true) {
+            } else if (pValue === "true" || pValue === true) {
                 return "Yes";
-            } else if ($pValue === "false" || $pValue === false) {
+            } else if (pValue === "false" || pValue === false) {
                 return "No";
             } else {
-                return $pValue;
+                return pValue;
             }
         }
 
