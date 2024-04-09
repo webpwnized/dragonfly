@@ -52,6 +52,7 @@
         };
 
         function sanitizeValue(pValue) {
+            alert(typeof pValue);
             if ($pValue === "null" || $pValue === null || $pValue === "undefined" || $pValue === undefined) {
                 return "";
             } else if (typeof pValue === 'undefined') {
