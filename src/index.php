@@ -122,7 +122,7 @@
                 outputDataPoint("id34", "FingerprintCookie", browserDataStorage.getFromCookie());
                 outputDataPoint("id35", "FingerprintLocalStorage", browserDataStorage.getFromLocalStorage);
                 outputDataPoint("id36", "FingerprintSessionStorage", browserDataStorage.getFromSessionStorage);
-            });
+            };
     </script>
 </head>
 <body class="content">
