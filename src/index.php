@@ -88,12 +88,11 @@
 
                 // Store browser fingerprint using different methods
                 const browserDataStorage = new BrowserDataStorage();
-                browserDataStorage.storeInCookie(lBrowserFingerprint);
-                browserDataStorage.storeInLocalStorage(lBrowserFingerprint);
-                browserDataStorage.storeInSessionStorage(lBrowserFingerprint);
-                browserDataStorage.storeInIndexedDB(lBrowserFingerprint);
-                browserDataStorage.storeInWindowObject(lBrowserFingerprint);
-
+                browserDataStorage.putInCookie(lBrowserFingerprint);
+                browserDataStorage.putInLocalStorage(lBrowserFingerprint);
+                browserDataStorage.putInSessionStorage(lBrowserFingerprint);
+                browserDataStorage.putInIndexedDB(lBrowserFingerprint);
+                
                 // Retrieve data from different methods (for demonstration purposes)
                 const retrievedDataFromWindowObject = browserDataStorage.getFromWindowObject(); // Retrieve from window object
                 const retrievedDataFromCookie = browserDataStorage.getFromCookie(); // Retrieve from cookie
