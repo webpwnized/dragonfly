@@ -92,11 +92,6 @@
                 browserDataStorage.putInLocalStorage(lBrowserFingerprint);
                 browserDataStorage.putInSessionStorage(lBrowserFingerprint);
                 browserDataStorage.putInIndexedDB(lBrowserFingerprint);
-                
-                // Retrieve data from different methods (for demonstration purposes)
-                const retrievedDataFromCookie = browserDataStorage.getFromCookie(); // Retrieve from cookie
-                const retrievedDataFromLocalStorage = browserDataStorage.getFromLocalStorage(); // Retrieve from local storage
-                const retrievedDataFromSessionStorage = browserDataStorage.getFromSessionStorage(); // Retrieve from session storage
 
                 outputDataPoint("id1", "BrowserFingerprint", lBrowserFingerprint);
                 outputDataPoint("id32", "ClientIPAddress", lClientIP);
@@ -124,11 +119,10 @@
                 outputDataPoint("id29", "Language", client.getLanguage());
                 outputDataPoint("id30", "SystemLanguage", client.getSystemLanguage());
                 outputDataPoint("id31", "CanvasPrint", client.getCanvasPrint().left(64));
-                outputDataPoint("id34", "FingerprintCookie", retrievedDataFromCookie);
-                outputDataPoint("id35", "FingerprintLocalStorage", retrievedDataFromLocalStorage);
-                outputDataPoint("id36", "FingerprintSessionStorage", retrievedDataFromSessionStorage);
-            }
-        });
+                outputDataPoint("id34", "FingerprintCookie", browserDataStorage.getFromCookie());
+                outputDataPoint("id35", "FingerprintLocalStorage", browserDataStorage.getFromLocalStorage);
+                outputDataPoint("id36", "FingerprintSessionStorage", browserDataStorage.getFromSessionStorage);
+            });
     </script>
 </head>
 <body class="content">
