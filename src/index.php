@@ -128,128 +128,130 @@
 </head>
 <body class="content">
     <div class="page-header">
-        <img src="images/blue-dragonfly-icon.jpg" height="175px" width="175px" alt="">
-        <span>Dragonfly</span>
+        <img src="images/blue-dragonfly-icon.jpg" height="175px" width="175px" alt="Dragonfly Icon">
+        <h1>Dragonfly</h1>
     </div>
-    <table class="styled-table">
-        <caption></caption>
-        <thead>
-            <tr>
-                <th scope="row">Data Point</th>
-                <th scope="row">Value</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th scope="row">HTTP Client IP Address</th>
-                <td><span id="id32"></span></td>
-            </tr>
-            <tr>
-                <th scope="row">Forwarded For</th>
-                <td><span id="id33"></span></td>
-            </tr>
-            <tr>
-                <th scope="row">Browser Tracking Fingerprint</th>
-                <td><span id="id1"></span></td>
-            </tr>
-            <tr>
-                <th scope="row">Fingerprint (Cookie)</th>
-                <td><span id="id34"></span></td>
-            </tr>
-            <tr>
-                <th scope="row">Fingerprint (Local Storage)</th>
-                <td><span id="id35"></span></td>
-            </tr>
-            <tr>
-                <th scope="row">Fingerprint (Session Storage)</th>
-                <td><span id="id36"></span></td>
-            </tr>
-            <tr>
-                <th scope="row">User Agent</th>
-                <td><span id="id2"></span></td>
-            </tr>
-            <tr>
-                <th scope="row">Browser Engine</th>
-                <td>
-                    <span id="id7"></span>&nbsp;
-                    <span id="id3"></span>&nbsp;
-                    <span id="id5"></span>&nbsp;
-                    <span id="id6"></span>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">Plugins</th>
-                <td><span id="id21"></span></td>
-            </tr>
-            <tr>
-                <th scope="row">CPU</th>
-                <td><span id="id12"></span></td>
-            </tr>
-            <tr>
-                <th scope="row">Screen Print</th>
-                <td><span id="id15"></span></td>
-            </tr>
-            <tr>
-                <th scope="row">Mime Types</th>
-                <td><span id="id23"></span></td>
-            </tr>
-            <tr>
-                <th scope="row">Fonts</th>
-                <td><span id="id24"></span></td>
-            </tr>
-            <tr>
-                <th scope="row">Local Storage</th>
-                <td><span id="id25"></span></td>
-            </tr>
-            <tr>
-                <th scope="row">Session Storage</th>
-                <td><span id="id26"></span></td>
-            </tr>
-            <tr>
-                <th scope="row">Cookies</th>
-                <td><span id="id27"></span></td>
-            </tr>
-            <tr>
-                <th scope="row">Time Zone</th>
-                <td><span id="id28"></span></td>
-            </tr>
-            <tr>
-                <th scope="row">Language</th>
-                <td><span id="id29"></span></td>
-            </tr>
-            <tr>
-                <th scope="row">System Language</th>
-                <td><span id="id30"></span></td>
-            </tr>
-            <tr>
-                <th scope="row">Canvas Print</th>
-                <td><span id="id31"></span></td>
-            </tr>
-            <tr>
-                <th scope="row">Silverlight Version</th>
-                <td><span id="id22"></span></td>
-            </tr>
-            <tr>
-                <th scope="row">Device</th>
-                <td><span id="id9"></span></td>
-            </tr>
-            <tr>
-                <th scope="row">Device Type</th>
-                <td><span id="id10"></span></td>
-            </tr>
-            <tr>
-                <th scope="row">Device Vendor</th>
-                <td><span id="id11"></span></td>
-            </tr>
-            <tr>
-                <th scope="row">Is Mobile</th>
-                <td><span id="id13"></span></td>
-            </tr>
-            <tr>
-                <th scope="row">Mobile Vendor</th>
-                <td><span id="id14"></span></td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="data-table-container">
+        <table class="styled-table">
+            <caption>Browser Metrics</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Data Point</th>
+                    <th scope="col">Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>HTTP Client IP Address</td>
+                    <td><span id="id32"></span></td>
+                </tr>
+                <tr>
+                    <td>Forwarded For</td>
+                    <td><span id="id33"></span></td>
+                </tr>
+                <tr>
+                    <td>Browser Tracking Fingerprint</td>
+                    <td><span id="id1"></span></td>
+                </tr>
+                <tr>
+                    <td>Fingerprint (Cookie)</td>
+                    <td><span id="id34"></span></td>
+                </tr>
+                <tr>
+                    <td>Fingerprint (Local Storage)</td>
+                    <td><span id="id35"></span></td>
+                </tr>
+                <tr>
+                    <td>Fingerprint (Session Storage)</td>
+                    <td><span id="id36"></span></td>
+                </tr>
+                <tr>
+                    <td>User Agent</td>
+                    <td><span id="id2"></span></td>
+                </tr>
+                <tr>
+                    <td>Browser Engine</td>
+                    <td>
+                        <span id="id7"></span>&nbsp;
+                        <span id="id3"></span>&nbsp;
+                        <span id="id5"></span>&nbsp;
+                        <span id="id6"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Plugins</td>
+                    <td><span id="id21"></span></td>
+                </tr>
+                <tr>
+                    <td>CPU</td>
+                    <td><span id="id12"></span></td>
+                </tr>
+                <tr>
+                    <td>Screen Print</td>
+                    <td><span id="id15"></span></td>
+                </tr>
+                <tr>
+                    <td>Mime Types</td>
+                    <td><span id="id23"></span></td>
+                </tr>
+                <tr>
+                    <td>Fonts</td>
+                    <td><span id="id24"></span></td>
+                </tr>
+                <tr>
+                    <td>Local Storage</td>
+                    <td><span id="id25"></span></td>
+                </tr>
+                <tr>
+                    <td>Session Storage</td>
+                    <td><span id="id26"></span></td>
+                </tr>
+                <tr>
+                    <td>Cookies</td>
+                    <td><span id="id27"></span></td>
+                </tr>
+                <tr>
+                    <td>Time Zone</td>
+                    <td><span id="id28"></span></td>
+                </tr>
+                <tr>
+                    <td>Language</td>
+                    <td><span id="id29"></span></td>
+                </tr>
+                <tr>
+                    <td>System Language</td>
+                    <td><span id="id30"></span></td>
+                </tr>
+                <tr>
+                    <td>Canvas Print</td>
+                    <td><span id="id31"></span></td>
+                </tr>
+                <tr>
+                    <td>Silverlight Version</td>
+                    <td><span id="id22"></span></td>
+                </tr>
+                <tr>
+                    <td>Device</td>
+                    <td><span id="id9"></span></td>
+                </tr>
+                <tr>
+                    <td>Device Type</td>
+                    <td><span id="id10"></span></td>
+                </tr>
+                <tr>
+                    <td>Device Vendor</td>
+                    <td><span id="id11"></span></td>
+                </tr>
+                <tr>
+                    <td>Is Mobile</td>
+                    <td><span id="id13"></span></td>
+                </tr>
+                <tr>
+                    <td>Mobile Vendor</td>
+                    <td><span id="id14"></span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
