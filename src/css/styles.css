@@ -10,10 +10,13 @@
 .page-header {
     font-size: 2.5rem; /* Equivalent to 40px */
     font-weight: bold;
+    text-align: center; /* Center align the header */
+    margin-bottom: 20px; /* Add some spacing below the header */
 }
 
 .page-header img {
     vertical-align: middle;
+    margin-right: 10px; /* Add some spacing between the image and text */
 }
 
 /* Tables */
@@ -22,9 +25,9 @@
 .styled-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.9rem; /* Equivalent to 14px */
-    font-family: sans-serif;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    font-size: 1rem; /* Equivalent to 16px */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Use a more modern font */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soften the box shadow */
 }
 
 /* Table Header */
@@ -40,6 +43,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    text-align: left; /* Align header text to the left */
 }
 
 /* Table Body */
@@ -50,20 +54,27 @@
 /* Table Row */
 .styled-table tbody tr {
     background-color: #ffffff;
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
 }
 
 /* Even Table Row */
 .styled-table tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
+    background-color: #f9f9f9; /* Slightly lighter shade for even rows */
 }
 
 /* Last Table Row */
 .styled-table tbody tr:last-of-type {
-    border-bottom: 2px solid #009879;
+    border-bottom: none; /* Remove border from last row */
 }
 
 /* Active Table Row */
 .styled-table tbody tr.active-row {
     font-weight: bold;
     color: #009879;
+}
+
+/* Hover effect for table rows */
+.styled-table tbody tr:hover {
+    background-color: #f0f0f0; /* Light gray background on hover */
+    cursor: pointer; /* Change cursor to pointer on hover */
 }
