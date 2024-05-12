@@ -94,7 +94,6 @@
                 browserDataStorage.putInIndexedDB(lBrowserFingerprint);
                 
                 // Retrieve data from different methods (for demonstration purposes)
-                const retrievedDataFromWindowObject = browserDataStorage.getFromWindowObject(); // Retrieve from window object
                 const retrievedDataFromCookie = browserDataStorage.getFromCookie(); // Retrieve from cookie
                 const retrievedDataFromLocalStorage = browserDataStorage.getFromLocalStorage(); // Retrieve from local storage
                 const retrievedDataFromSessionStorage = browserDataStorage.getFromSessionStorage(); // Retrieve from session storage
@@ -128,7 +127,6 @@
                 outputDataPoint("id34", "Fingerprint (Cookie)", retrievedDataFromCookie);
                 outputDataPoint("id35", "Fingerprint (Local Storage)", retrievedDataFromLocalStorage);
                 outputDataPoint("id36", "Fingerprint (Session Storage)", retrievedDataFromSessionStorage);
-                outputDataPoint("id37", "Fingerprint (Window Object)", retrievedDataFromWindowObject);
             }
         });
     </script>
@@ -170,10 +168,6 @@
             <tr>
                 <th scope="row">Fingerprint (Session Storage)</th>
                 <td><span id="id36"></span></td>
-            </tr>
-            <tr>
-                <th scope="row">Fingerprint (Window Object)</th>
-                <td><span id="id37"></span></td>
             </tr>
             <tr>
                 <th scope="row">User Agent</th>
