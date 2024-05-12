@@ -45,7 +45,9 @@
     <title>Dragonfly</title>
     <link rel="stylesheet" href="css/styles.css">
     <script src="javascript/client.base.min.js"></script>
+    <script src="javascript/browserDataStorage.js"></script>
     <script nonce="efe3f3d7e23b979ae212c5092469ce195401701a71a00eba0f4f955a068b05e2">
+
         // Credit to https://github.com/JackSpirou/ClientJS?tab=readme-ov-file#bundles
         String.prototype.left = function(n) {
             return this.substr(0,n);
@@ -82,8 +84,23 @@
                 const client = new ClientJS();
                 const lClientIP = "<?php echo htmlspecialchars($clientIpAddress); ?>";
                 const lForwardedFor = "<?php echo htmlspecialchars($forwardedFor); ?>";
+                const lBrowserFingerprint = client.getFingerprint();
 
-                outputDataPoint("id1", "BrowserFingerprint", client.getFingerprint());
+                // Store browser fingerprint using different methods
+                const browserDataStorage = new BrowserDataStorage();
+                browserDataStorage.storeInCookie(lBrowserFingerprint);
+                browserDataStorage.storeInLocalStorage(lBrowserFingerprint);
+                browserDataStorage.storeInSessionStorage(lBrowserFingerprint);
+                browserDataStorage.storeInIndexedDB(lBrowserFingerprint);
+                browserDataStorage.storeInWindowObject(lBrowserFingerprint);
+
+                // Retrieve data from different methods (for demonstration purposes)
+                const retrievedDataFromCookie = document.cookie; // Retrieve from cookie (parse if needed)
+                const retrievedDataFromLocalStorage = localStorage.getItem('userData'); // Retrieve from local storage
+                const retrievedDataFromSessionStorage = sessionStorage.getItem('userData'); // Retrieve from session storage
+                const retrievedDataFromWindowObject = window.userData; // Retrieve from window object
+
+                outputDataPoint("id1", "BrowserFingerprint", lBrowserFingerprint);
                 outputDataPoint("id32", "ClientIPAddress", lClientIP);
                 outputDataPoint("id33", "ForwardedFor", lForwardedFor);
                 outputDataPoint("id2", "UserAgent", client.getUserAgent());
@@ -109,6 +126,10 @@
                 outputDataPoint("id29", "Language", client.getLanguage());
                 outputDataPoint("id30", "SystemLanguage", client.getSystemLanguage());
                 outputDataPoint("id31", "CanvasPrint", client.getCanvasPrint().left(64));
+                outputDataPoint("id34", "Fingerprint (Cookie)", retrievedDataFromCookie);
+                outputDataPoint("id35", "Fingerprint (Local Storage)", retrievedDataFromLocalStorage);
+                outputDataPoint("id36", "Fingerprint (Session Storage)", retrievedDataFromSessionStorage);
+                outputDataPoint("id37", "Fingerprint (Window Object)", retrievedDataFromWindowObject);
             }
         });
     </script>
@@ -138,6 +159,22 @@
             <tr>
                 <th scope="row">Browser Tracking Fingerprint</th>
                 <td><span id="id1"></span></td>
+            </tr>
+            <tr>
+                <th scope="row">Fingerprint (Cookie)</th>
+                <td><span id="id34"></span></td>
+            </tr>
+            <tr>
+                <th scope="row">Fingerprint (Local Storage)</th>
+                <td><span id="id35"></span></td>
+            </tr>
+            <tr>
+                <th scope="row">Fingerprint (Session Storage)</th>
+                <td><span id="id36"></span></td>
+            </tr>
+            <tr>
+                <th scope="row">Fingerprint (Window Object)</th>
+                <td><span id="id37"></span></td>
             </tr>
             <tr>
                 <th scope="row">User Agent</th>
