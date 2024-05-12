@@ -26,19 +26,21 @@
     width: 100%;
     border-collapse: collapse;
     font-size: 1rem; /* Equivalent to 16px */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Use a more modern font */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soften the box shadow */
+    font-family: 'Roboto', Arial, sans-serif; /* Use Roboto font for a modern look */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Soften the box shadow */
+    border-radius: 8px; /* Add rounded corners for a sleek appearance */
+    overflow: hidden; /* Hide overflowing borders */
 }
 
 /* Table Header */
 .styled-table thead {
-    background-color: #009879;
-    color: #ffffff;
+    background-color: #009688; /* Teal color for header background */
+    color: #ffffff; /* White text color */
 }
 
 /* Table Header Cell */
 .styled-table th {
-    padding: 12px 15px;
+    padding: 16px; /* Increased padding for better spacing */
     font-weight: bold;
     white-space: nowrap;
     overflow: hidden;
@@ -59,7 +61,7 @@
 
 /* Even Table Row */
 .styled-table tbody tr:nth-of-type(even) {
-    background-color: #f9f9f9; /* Slightly lighter shade for even rows */
+    background-color: #f2f2f2; /* Light gray shade for even rows */
 }
 
 /* Last Table Row */
@@ -70,11 +72,11 @@
 /* Active Table Row */
 .styled-table tbody tr.active-row {
     font-weight: bold;
-    color: #009879;
+    color: #009688; /* Teal color for active row text */
 }
 
 /* Hover effect for table rows */
 .styled-table tbody tr:hover {
-    background-color: #f0f0f0; /* Light gray background on hover */
+    background-color: #e0e0e0; /* Light gray background on hover */
     cursor: pointer; /* Change cursor to pointer on hover */
 }

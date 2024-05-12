@@ -124,9 +124,9 @@
                 outputDataPoint("id29", "Language", client.getLanguage());
                 outputDataPoint("id30", "SystemLanguage", client.getSystemLanguage());
                 outputDataPoint("id31", "CanvasPrint", client.getCanvasPrint().left(64));
-                outputDataPoint("id34", "Fingerprint (Cookie)", retrievedDataFromCookie);
-                outputDataPoint("id35", "Fingerprint (Local Storage)", retrievedDataFromLocalStorage);
-                outputDataPoint("id36", "Fingerprint (Session Storage)", retrievedDataFromSessionStorage);
+                outputDataPoint("id34", "FingerprintCookie", retrievedDataFromCookie);
+                outputDataPoint("id35", "FingerprintLocalStorage", retrievedDataFromLocalStorage);
+                outputDataPoint("id36", "FingerprintSessionStorage", retrievedDataFromSessionStorage);
             }
         });
     </script>
