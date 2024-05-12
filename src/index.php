@@ -120,8 +120,8 @@
                 outputDataPoint("id30", "SystemLanguage", client.getSystemLanguage());
                 outputDataPoint("id31", "CanvasPrint", client.getCanvasPrint().left(64));
                 outputDataPoint("id34", "FingerprintCookie", browserDataStorage.getFromCookie());
-                outputDataPoint("id35", "FingerprintLocalStorage", browserDataStorage.getFromLocalStorage);
-                outputDataPoint("id36", "FingerprintSessionStorage", browserDataStorage.getFromSessionStorage);
+                outputDataPoint("id35", "FingerprintLocalStorage", browserDataStorage.getFromLocalStorage());
+                outputDataPoint("id36", "FingerprintSessionStorage", browserDataStorage.getFromSessionStorage());
             };
         });
     </script>
