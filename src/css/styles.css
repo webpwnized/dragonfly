@@ -27,20 +27,20 @@
     border-collapse: collapse;
     font-size: 1rem; /* Equivalent to 16px */
     font-family: 'Roboto', Arial, sans-serif; /* Use Roboto font for a modern look */
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Soften the box shadow */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soften the box shadow */
     border-radius: 8px; /* Add rounded corners for a sleek appearance */
     overflow: hidden; /* Hide overflowing borders */
 }
 
 /* Table Header */
 .styled-table thead {
-    background-color: #009688; /* Teal color for header background */
+    background-color: #4CAF50; /* Green color for header background */
     color: #ffffff; /* White text color */
 }
 
 /* Table Header Cell */
 .styled-table th {
-    padding: 16px; /* Increased padding for better spacing */
+    padding: 20px; /* Increased padding for better spacing */
     font-weight: bold;
     white-space: nowrap;
     overflow: hidden;
@@ -61,7 +61,7 @@
 
 /* Even Table Row */
 .styled-table tbody tr:nth-of-type(even) {
-    background-color: #f2f2f2; /* Light gray shade for even rows */
+    background-color: #f5f5f5; /* Light gray shade for even rows */
 }
 
 /* Last Table Row */
@@ -69,14 +69,14 @@
     border-bottom: none; /* Remove border from last row */
 }
 
-/* Active Table Row */
-.styled-table tbody tr.active-row {
-    font-weight: bold;
-    color: #009688; /* Teal color for active row text */
-}
-
 /* Hover effect for table rows */
 .styled-table tbody tr:hover {
     background-color: #e0e0e0; /* Light gray background on hover */
     cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+/* Active Table Row */
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: #4CAF50; /* Green color for active row text */
 }
