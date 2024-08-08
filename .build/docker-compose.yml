@@ -6,7 +6,7 @@
 #   docker build --file .build/www/Dockerfile --tag webpwnized/dragonfly:www .
 #
 # From project root, run with:
-#   docker-compose --file .build/docker-compose.yml up --detach
+#   docker compose --file .build/docker compose.yml up --detach
 
 version: '3.8'
 services:
@@ -16,7 +16,7 @@ services:
     container_name: www
     image: webpwnized/dragonfly:www
     build:
-        context: www  # The context starts from the directory that the docker-compose.yml file is in unless adjusted
+        context: www  # The context starts from the directory that the docker compose.yml file is in unless adjusted
         dockerfile: Dockerfile
     ports:
       - 127.0.0.1:80:80
