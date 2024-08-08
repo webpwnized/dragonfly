@@ -56,7 +56,7 @@ To run Dragonfly using Docker Compose:
 1. From the project root, run:
 
    ```
-   docker-compose --file .build/docker-compose.yml up --detach
+   docker compose --file .build/docker compose.yml up --detach
    ```
 
 2. Once the containers are running, you can access the following services on localhost:

@@ -3,7 +3,7 @@
 #   docker build --file .build/www/Dockerfile --tag webpwnized/dragonfly:www .
 #
 # From project root, run with:
-#   docker-compose --file .build/docker-compose.yml up --detach
+#   docker compose --file .build/docker compose.yml up --detach
 
 # Start with recent version of PHP with Apache 
 # https://hub.docker.com/_/php?tab=tags&page=1&ordering=last_updated&name=apache
