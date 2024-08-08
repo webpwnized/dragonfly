@@ -27,8 +27,10 @@ RUN apt-get update && \
 # Install application software  #
 # ############################  #
 
-# From project root, the application source code is in src
-COPY src /var/www/dragonfly
+RUN cd /tmp && \
+    git clone https://github.com/webpwnized/dragonfly.git dragonfly && \
+    cp -r dragonfly/src /var/www/dragonfly && \
+    rm -rf /tmp/dragonfly
 
 # ######################## #
 # Configure the web server #
