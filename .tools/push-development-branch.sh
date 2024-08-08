@@ -1,54 +1,78 @@
 #!/bin/bash
+# Purpose: Merge development branch into main branch and tag with version
+# Usage: ./push-development-branch.sh <version> <annotation>
+# Description: This script merges the development branch into the main branch,
+# tags the main branch with the specified version, and
+# calls another script 'git.sh' with the version and annotation.
 
-# Function to check the success of a command
-check_command_success() {
-    if [ $? -ne 0 ]; then
-        echo "Error during: $1"
-        exit 1
-    fi
+# Function to print messages with a timestamp
+print_message() {
+    echo ""
+    echo "$(date +"%Y-%m-%d %H:%M:%S") - $1"
 }
 
-# Function to create a git tag
-create_tag() {
-    echo "Creating tag $VERSION with annotation \"$ANNOTATION\""
-    ./git.sh "$VERSION" "$ANNOTATION"
-    check_command_success "tag creation"
+# Function to display help message
+show_help() {
+    echo "Usage: $0 <version> <annotation>"
+    echo ""
+    echo "Options:"
+    echo "  -h, --help     Display this help message."
+    echo ""
+    echo "Description:"
+    echo "This script merges the development branch into the main branch,"
+    echo "tags the main branch with the specified version, and"
+    echo "calls another script 'git.sh' with the version and annotation."
+    exit 0
 }
 
-# Function to switch git branch
-switch_branch() {
-    echo "Switching to the $1 branch"
-    git checkout $1
-    check_command_success "switching to $1 branch"
-}
-
-# Check if the correct number of arguments is provided
-if (( $# != 2 )); then
-    printf "%b" "Usage: git.sh <version> <annotation>\n" >&2
+# Function to handle errors
+handle_error() {
+    print_message "Error: $1"
     exit 1
+}
+
+# Parse options
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        -h|--help) show_help ;;
+        *) break ;;
+    esac
+    shift
+done
+
+# Check if exactly two arguments are passed
+if (( $# != 2 )); then
+    handle_error "Incorrect number of arguments. Usage: $0 <version> <annotation>"
 fi
 
-# Assign command-line arguments to variables
-VERSION="$1"
-ANNOTATION="$2"
+# Assign arguments to variables
+VERSION=$1
+ANNOTATION=$2
 
-# Create tag
-create_tag
+# Verify 'git.sh' script exists and is executable
+GIT_SCRIPT="./git.sh"
+if [[ ! -x "$GIT_SCRIPT" ]]; then
+    handle_error "'git.sh' script not found or not executable"
+fi
 
-# Switch to main branch
-switch_branch "main"
+# Tag and merge operations
+print_message "Calling git.sh with tag $VERSION with annotation \"$ANNOTATION\""
+"$GIT_SCRIPT" "$VERSION" "$ANNOTATION" || handle_error "Failed to call git.sh"
 
-# Merge development branch into main
-echo "Merging development branch into main"
-git merge development
-check_command_success "merging development into main"
+print_message "Checking out main branch"
+git checkout main || handle_error "Failed to checkout main branch"
 
-# Create tag again
-create_tag
+print_message "Merging development branch"
+git merge development || handle_error "Failed to merge development branch"
 
-# Switch back to development branch
-switch_branch "development"
+print_message "Calling git.sh with tag $VERSION with annotation \"$ANNOTATION\""
+"$GIT_SCRIPT" "$VERSION" "$ANNOTATION" || handle_error "Failed to call git.sh"
 
-# Show current status after operations
-git status
-check_command_success "git status"
+print_message "Checking out development branch"
+git checkout development || handle_error "Failed to checkout development branch"
+
+# Show git status
+print_message "Git status"
+git status || handle_error "Failed to show git status"
+
+print_message "Script completed successfully"
