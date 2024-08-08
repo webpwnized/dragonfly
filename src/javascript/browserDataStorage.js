@@ -1,3 +1,4 @@
+
 class BrowserDataStorage {
     constructor() {}
 

@@ -6,7 +6,7 @@
 #   docker build --file .build/www/Dockerfile --tag webpwnized/dragonfly:www .
 #
 # From project root, run with:
-#   docker compose --file .build/docker compose.yml up --detach
+#   docker compose --file .build/docker-compose.yml up --detach
 
 version: '3.8'
 services:

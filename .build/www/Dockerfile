@@ -3,7 +3,7 @@
 #   docker build --file .build/www/Dockerfile --tag webpwnized/dragonfly:www .
 #
 # From project root, run with:
-#   docker compose --file .build/docker compose.yml up --detach
+#   docker compose --file .build/docker-compose.yml up --detach
 
 # Start with recent version of PHP with Apache 
 # https://hub.docker.com/_/php?tab=tags&page=1&ordering=last_updated&name=apache
@@ -38,7 +38,7 @@ RUN apt-get update && \
 # ######################## #
 
 # Change the document root
-ENV APACHE_DOCUMENT_ROOT /var/www/dragonfly/
+ENV APACHE_DOCUMENT_ROOT="/var/www/dragonfly/"
 
 RUN sed -ri -e "s!/var/www/html!${APACHE_DOCUMENT_ROOT}!g" /etc/apache2/sites-available/*.conf && \
         sed -ri -e "s!/var/www/!${APACHE_DOCUMENT_ROOT}!g" /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
