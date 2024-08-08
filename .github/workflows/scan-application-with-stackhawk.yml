@@ -63,7 +63,7 @@ jobs:
         run: |
 
           # Starting containers using Docker Compose. 
-          docker compose --file .build/docker compose.yml up --detach;
+          docker compose --file .build/docker-compose.yml up --detach;
 
       # Step 5: Check if web application up
       - name: Check if Web Application running
