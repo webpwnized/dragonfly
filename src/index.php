@@ -170,7 +170,7 @@
                 <td><span id="id33"></span></td>
             </tr>
             <tr>
-                <th scope="row">Using Tor Network 🧅</th>
+                <th scope="row">Using Tor Network</th>
                 <td><span id="id37"></span></td>
             </tr>
             <tr>
