@@ -1,33 +1,42 @@
 <?php
-    // Enable HSTS (HTTP Strict Transport Security) - Only available with HTTPS
-    // header("Strict-Transport-Security: max-age=31536000; includeSubDomains", true);
+    /**
+     * Gets the most reliable public IP address of the client for analysis (like Tor check).
+     */
+    function get_best_guess_ip() {
+        $headers_to_check = [
+            'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED',
+            'HTTP_X_REAL_IP', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_CLIENT_IP', 'REMOTE_ADDR'
+        ];
+        foreach ($headers_to_check as $header) {
+            if (isset($_SERVER[$header])) {
+                $ip_list = explode(',', $_SERVER[$header]);
+                $potential_ip = trim(reset($ip_list));
+                if (filter_var($potential_ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false) {
+                    return $potential_ip;
+                }
+            }
+        }
+        return $_SERVER['REMOTE_ADDR'] ?? false;
+    }
 
-    // HTTP/1.1 cache control
-    header('Cache-Control: no-store, no-cache', true);
+    /**
+     * Checks if a given IP address is a known Tor exit node.
+     */
+    function is_tor_exit_node($ip) {
+        if (empty($ip) || !filter_var($ip, FILTER_VALIDATE_IP)) {
+            return false;
+        }
+        $reversed_ip = implode('.', array_reverse(explode('.', $ip)));
+        $check_host = $reversed_ip . '.dnsel.torproject.org';
+        return gethostbyname($check_host) === '127.0.0.2';
+    }
 
-    // Cross-frame scripting and click-jacking
-    header('X-FRAME-OPTIONS: DENY', true);
+    // --- Main Logic ---
 
-    // Client-side Script injection
-    $contentSecurityPolicy = "Content-Security-Policy: " .
-        "default-src 'self'; script-src 'self' 'nonce-efe3f3d7e23b979ae212c5092469ce195401701a71a00eba0f4f955a068b05e2'";
-    header($contentSecurityPolicy, true);
+    // 1. RESTORED: Get the direct server IP (REMOTE_ADDR)
+    $remoteAddr = $_SERVER['REMOTE_ADDR'] ?? '';
 
-    // Content sniffing prevention
-    header('X-Content-Type-Options: nosniff', true);
-
-    // Referrer Policy
-    header('Referrer-Policy: no-referrer', true);
-
-    // Remove server version banners
-    header_remove('X-Powered-By');
-    header_remove('Server');
-
-    // Get client IP address
-    $clientIpAddress = isset($_SERVER['HTTP_CLIENT_IP']) ? $_SERVER['HTTP_CLIENT_IP'] : 
-        (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '');
-
-    // Get forwarded IP address
+    // 2. RESTORED: Get the raw forwarded-for header value
     $forwardedFor = '';
     foreach (['HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED'] as $header) {
         if (isset($_SERVER[$header])) {
@@ -35,8 +44,23 @@
             break;
         }
     }
-?>
 
+    // 3. NEW: Perform the Tor check on the most likely user IP
+    $bestIpForAnalysis = get_best_guess_ip();
+    $isTorUser = is_tor_exit_node($bestIpForAnalysis);
+
+    // --- Security Headers ---
+    // header("Strict-Transport-Security: max-age=31536000; includeSubDomains", true);
+    header('Cache-Control: no-store, no-cache', true);
+    header('X-FRAME-OPTIONS: DENY', true);
+    $contentSecurityPolicy = "Content-Security-Policy: " .
+        "default-src 'self'; script-src 'self' 'nonce-efe3f3d7e23b979ae212c5092469ce195401701a71a00eba0f4f955a068b05e2'";
+    header($contentSecurityPolicy, true);
+    header('X-Content-Type-Options: nosniff', true);
+    header('Referrer-Policy: no-referrer', true);
+    header_remove('X-Powered-By');
+    header_remove('Server');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,23 +72,17 @@
     <script src="javascript/browserDataStorage.js"></script>
     <script nonce="efe3f3d7e23b979ae212c5092469ce195401701a71a00eba0f4f955a068b05e2">
 
-        // Credit to https://github.com/JackSpirou/ClientJS?tab=readme-ov-file#bundles
         String.prototype.left = function(n) {
             return this.substr(0,n);
         };
 
         function sanitizeValue(pValue) {
-            if (typeof pValue === 'undefined') {
+            if (typeof pValue === 'undefined' || pValue === null || pValue === "null" || pValue === "undefined") {
                 return "";
-            } else if (pValue === "null" || pValue === null || pValue === "undefined" || pValue === undefined) {
-                return "";
-            } else if (pValue === "true" || pValue === true) {
-                return "Yes";
-            } else if (pValue === "false" || pValue === false) {
-                return "No";
-            } else {
-                return pValue;
             }
+            if (pValue === true || pValue === "true") return "Yes";
+            if (pValue === false || pValue === "false") return "No";
+            return pValue;
         }
 
         function outputDataPoint(pSpanId, pKey, pValue) {
@@ -82,20 +100,23 @@
         document.addEventListener('readystatechange', event => {
             if (event.target.readyState === "complete") {
                 const client = new ClientJS();
-                const lClientIP = "<?php echo htmlspecialchars($clientIpAddress); ?>";
+                // Pass all three PHP variables to JavaScript
+                const lRemoteAddr = "<?php echo htmlspecialchars($remoteAddr); ?>";
                 const lForwardedFor = "<?php echo htmlspecialchars($forwardedFor); ?>";
+                const lIsTorUser = <?php echo $isTorUser ? 'true' : 'false'; ?>;
                 const lBrowserFingerprint = client.getFingerprint();
 
-                // Store browser fingerprint using different methods
                 const browserDataStorage = new BrowserDataStorage();
                 browserDataStorage.putInCookie(lBrowserFingerprint);
                 browserDataStorage.putInLocalStorage(lBrowserFingerprint);
                 browserDataStorage.putInSessionStorage(lBrowserFingerprint);
                 browserDataStorage.putInIndexedDB(lBrowserFingerprint);
 
-                outputDataPoint("id1", "BrowserFingerprint", lBrowserFingerprint);
-                outputDataPoint("id32", "ClientIPAddress", lClientIP);
+                // Populate original and new data points
+                outputDataPoint("id32", "RemoteAddr", lRemoteAddr);
                 outputDataPoint("id33", "ForwardedFor", lForwardedFor);
+                outputDataPoint("id37", "IsTorUser", lIsTorUser);
+                outputDataPoint("id1", "BrowserFingerprint", lBrowserFingerprint);
                 outputDataPoint("id2", "UserAgent", client.getUserAgent());
                 outputDataPoint("id3", "Browser", client.getBrowser());
                 outputDataPoint("id5", "Engine", client.getEngine());
@@ -141,12 +162,16 @@
         </thead>
         <tbody>
             <tr>
-                <th scope="row">HTTP Client IP Address</th>
+                <th scope="row">Direct IP Address (REMOTE_ADDR)</th>
                 <td><span id="id32"></span></td>
             </tr>
             <tr>
-                <th scope="row">Forwarded For</th>
+                <th scope="row">Forwarded-For Header</th>
                 <td><span id="id33"></span></td>
+            </tr>
+            <tr>
+                <th scope="row">Using Tor Network 🧅</th>
+                <td><span id="id37"></span></td>
             </tr>
             <tr>
                 <th scope="row">Browser Tracking Fingerprint</th>
