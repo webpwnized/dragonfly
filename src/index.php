@@ -67,6 +67,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Dragonfly</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="css/styles.css">
     <script src="javascript/client.base.min.js"></script>
     <script src="javascript/browserDataStorage.js"></script>
