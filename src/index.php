@@ -163,7 +163,7 @@
         </thead>
         <tbody>
             <tr>
-                <th scope="row">Direct IP Address (REMOTE_ADDR)</th>
+                <th scope="row">IP Address</th>
                 <td><span id="id32"></span></td>
             </tr>
             <tr>
