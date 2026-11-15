@@ -71,22 +71,52 @@
     ]);
 
     $permissionsPolicy = implode(', ', [
+        // Camera, microphone, location, and screen capture.
         'camera=()',
         'microphone=()',
         'geolocation=()',
         'display-capture=()',
-        'payment=()',
-        'usb=()',
-    ]);
 
-    
+        // Motion, orientation, and environmental sensors.
+        'accelerometer=()',
+        'gyroscope=()',
+        'magnetometer=()',
+        'ambient-light-sensor=()',
+
+        // Direct access to peripherals and connected devices.
+        'bluetooth=()',
+        'hid=()',
+        'serial=()',
+        'usb=()',
+        'midi=()',
+
+        // Payment, sharing, and clipboard APIs.
+        'payment=()',
+        'web-share=()',
+        'clipboard-read=()',
+        'clipboard-write=()',
+
+        // Media playback and presentation features.
+        'autoplay=()',
+        'encrypted-media=()',
+        'fullscreen=()',
+        'picture-in-picture=()',
+        'speaker-selection=()',
+
+        // Window and screen controls.
+        'window-management=()',
+        'screen-wake-lock=()',
+    ]);
 
     header('Cache-Control: no-store, no-cache', true);
     header('X-FRAME-OPTIONS: DENY', true);
     header('Content-Security-Policy: ' . $contentSecurityPolicy, true);
     header('X-Content-Type-Options: nosniff', true);
     header('Referrer-Policy: no-referrer', true);
-    header('Permissions-Policy: ' . $permissionsPolicy, true);
+    #header('Permissions-Policy: ' . $permissionsPolicy, true);
+    header('Cross-Origin-Opener-Policy: same-origin', true);
+    header('Cross-Origin-Opener-Policy: same-origin', true);
+    header('Cross-Origin-Resource-Policy: same-origin', true);
     header_remove('X-Powered-By');
     header_remove('Server');
 ?>
