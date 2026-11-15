@@ -40,7 +40,7 @@ jobs:
           fi
 
       - name: Scan the Dockerfile with Trivy
-        uses: aquasecurity/trivy-action@a9c7b0f06e461e9d4b4d1711f154ee024b8d7ab8 # v0.36.0
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
         with:
           # Config mode checks infrastructure and build definitions.
           # Scan the same Dockerfile used to build the www image.
@@ -66,7 +66,7 @@ jobs:
       - name: Save the Trivy report
         # Preserve any generated report for troubleshooting or PR review.
         if: ${{ !cancelled() && hashFiles('dockerfile-trivy-scan-results.sarif') != '' }}
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: dockerfile-trivy-scan-results
           path: dockerfile-trivy-scan-results.sarif
