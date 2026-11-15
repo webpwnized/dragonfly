@@ -1,101 +1,136 @@
-# Define the name of your workflow.
+# Dragonfly container release workflow
+#
+# Follow the image through three stages.
+#   1. Build it and load it into the runner's local Docker engine.
+#   2. Scan that local image and retain the report.
+#   3. Publish the same image under a versioned tag and the moving www tag.
 name: Build, Scan, and Push Image to DockerHub
 
-# Specify when this workflow should run (on a push event to the 'main' branch).
+# A push to main starts a release. Merging a pull request into main
+# produces a push event. Configure required reviews and checks separately
+# in the repository's branch protection rules.
 on:
   push:
     branches:
-      - 'main'
+      - main
 
-# Define environment variables for better organization.
+# These permissions apply to GitHub's automatically issued GITHUB_TOKEN.
+# Checkout needs read access to the repository. Docker Hub uses separate
+# credentials, and saving a SARIF artifact needs no code-scanning permission.
+permissions:
+  contents: read
+
+# Runs in this repository that use this group cannot publish concurrently.
+# Let the active run finish. GitHub can replace an older pending run with a
+# newer one, so this group does not guarantee a release for every push.
+concurrency:
+  group: dragonfly-dockerhub-publish
+  cancel-in-progress: false
+
+# Workflow-level environment values are available to every step.
+# Keep the Docker Hub repository name in one place so the build, scan,
+# and publish steps all use the same image name.
 env:
-  WEB_CONTAINER_NAME: "www"  # Name of the web container
+  IMAGE_REPOSITORY: webpwnized/dragonfly
 
 jobs:
-
   docker-build:
-
-    name: build-image-and-push-to-dockerhub
-
+    name: Build, scan, and publish web image
     runs-on: ubuntu-latest
-    
-    # Define permissions for specific actions
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
 
+    # Steps in one job share the runner's workspace and Docker engine.
+    # The image created by docker build remains available to later steps.
+    # By default, a step runs only if preceding steps succeeded.
     steps:
-      # Step 1: Prepare the runner and check out the codebase.
       - name: Checkout code
-        uses: actions/checkout@v4
+        # Pin actions to full commit SHAs so a moved release tag cannot
+        # silently change the code that runs. The version comment makes
+        # the pin readable. Dependabot can propose updates to the SHA.
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
-          path: .  # Check out the codebase to the current directory.
+          # The job reads the checkout and never pushes back to GitHub.
+          # Keep checkout credentials out of the local Git configuration.
+          persist-credentials: false
 
-      # Step 2: Get the version from a file and set it as an environment variable.
-      - name: Get version from version file
+      - name: Read and validate image version
+        shell: bash
         run: |
-          VERSION=$(cat version)  # Read version from file named 'version'.
-          echo "VERSION=$VERSION" >> $GITHUB_ENV  # Set the version as an environment variable.
+          # Read the release suffix from the version file at the repo root.
+          # Bash command substitution removes trailing newlines.
+          version=$(<version)
 
-      # Step 3: Set up Docker Buildx on the runner.
-      # https://github.com/marketplace/actions/build-and-push-docker-images
-      - name: Set up Docker Buildx on the runner
-        uses: docker/setup-buildx-action@v3
+          # A Docker tag can be up to 128 characters. Reserve four for the
+          # "www-" prefix and allow 1 to 124 characters in the suffix.
+          # The character allowlist also prevents embedded newlines from
+          # creating extra entries when we write to GITHUB_ENV.
+          if [[ ! "$version" =~ ^[A-Za-z0-9][A-Za-z0-9_.-]{0,123}$ ]]; then
+            echo "::error file=version::Expected a Docker tag suffix of 1 to 124 characters."
+            exit 1
+          fi
 
-      # Step 4: Login to Docker Hub using secrets for authentication.
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
+          # GITHUB_ENV is a runner-provided file. Writing to it makes
+          # VERSION available as an environment variable in later steps.
+          printf 'VERSION=%s\n' "$version" >> "$GITHUB_ENV"
+
+      - name: Build web image
+        shell: bash
+        run: |
+          # --file selects the Dockerfile. The final dot is the build
+          # context, which determines what local files Docker can access.
+          # This creates a local image tagged www. Publishing happens
+          # after Trivy has scanned it.
+          docker build \
+            --file .build/www/Dockerfile \
+            --tag "${IMAGE_REPOSITORY}:www" \
+            .
+
+      - name: Scan web image with Trivy
+        uses: aquasecurity/trivy-action@a9c7b0f06e461e9d4b4d1711f154ee024b8d7ab8 # v0.36.0
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}  # Username from DockerHub secrets.
-          password: ${{ secrets.DOCKERHUB_TOKEN }}  # Token from DockerHub secrets.
+          # Action inputs use GitHub expression syntax. Bash steps use
+          # shell variables such as ${IMAGE_REPOSITORY}.
+          image-ref: ${{ env.IMAGE_REPOSITORY }}:www
 
-      # ----------------------------------------------------------------------------
-      # Web Container
-      # ----------------------------------------------------------------------------
-     
-      # Step 5: Build and export Web Container to Docker
-      - name: Build and Export Web Container to Docker
-        uses: docker/build-push-action@v5
-        with:
-          push: false  # Do not push the built image.
-          context: .  # Use the current directory as the build context.
-          file: .build/${{ env.WEB_CONTAINER_NAME }}/Dockerfile  # Path to the Dockerfile.
-          load: true  # Load the built image into Docker.
-          tags: webpwnized/dragonfly:${{ env.WEB_CONTAINER_NAME }}  # Docker image tag.
+          # SARIF is a machine-readable format for scanner findings.
+          format: sarif
+          output: www-trivy-scan-results.sarif
 
-      # Step 6: Run Trivy vulnerability scanner on Web Container
-      - name: Run Trivy vulnerability scanner on Web Container
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: 'webpwnized/dragonfly:${{ env.WEB_CONTAINER_NAME }}'  # Image reference.
-          format: 'sarif'  # Output format for scan results.
-          output: '${{ env.WEB_CONTAINER_NAME }}-trivy-scan-results.sarif'  # Output file for scan results.
-  
-      # Step 7: View Trivy scan results
-      - name: View Results
-        run: cat ${{ env.WEB_CONTAINER_NAME }}-trivy-scan-results.sarif  # Output Trivy scan results.
+          # Findings are report-only. An execution error that fails the
+          # scan step still prevents the workflow from publishing.
+          exit-code: '0'
 
-      #- name: Upload Web Container Trivy scan results to GitHub Security tab
-      #  uses: github/codeql-action/upload-sarif@main
-      #  with:
-      #    sarif_file: '${{ env.WEB_CONTAINER_NAME }}-trivy-scan-results.sarif'
-      #    category: ${{ env.WEB_CONTAINER_NAME }}
-  
-      # Step 8: Build and push Web Container
-      - name: Build and push Web Container
-        uses: docker/build-push-action@v5
+      - name: Save Trivy report
+        # An explicit condition lets this step save an existing report
+        # after a failed scan. A canceled run skips the upload.
+        if: ${{ !cancelled() && hashFiles('www-trivy-scan-results.sarif') != '' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          context: .  # Use the current directory as the build context.
-          file: .build/${{ env.WEB_CONTAINER_NAME }}/Dockerfile  # Path to the Dockerfile.
-          push: true  # Push the built image to DockerHub.
-          tags: webpwnized/dragonfly:${{ env.WEB_CONTAINER_NAME }}  # Docker image tag.
+          # Download this report from the GitHub Actions run summary.
+          # It is a workflow artifact, not a Code Scanning alert upload.
+          name: www-trivy-scan-results
+          path: www-trivy-scan-results.sarif
+          if-no-files-found: error
 
-      # Step 9: Build and push Web Container with version number
-      - name: Build and push Web Container with version number
-        uses: docker/build-push-action@v5
+      - name: Log in to Docker Hub
+        # The build and scan steps run before registry login. Give the
+        # publishing token only the permissions needed to push this image.
+        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3.3.0
         with:
-          context: .  # Use the current directory as the build context.
-          file: .build/${{ env.WEB_CONTAINER_NAME }}/Dockerfile  # Path to the Dockerfile.
-          push: true  # Push the built image to DockerHub.
-          tags: webpwnized/dragonfly:${{ env.WEB_CONTAINER_NAME }}-${{ env.VERSION }}  # Docker image tag with version number.
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Publish scanned image
+        shell: bash
+        run: |
+          image="${IMAGE_REPOSITORY}:www"
+          versioned_image="${IMAGE_REPOSITORY}:www-${VERSION}"
+
+          # A tag is another name for an image. This command creates a
+          # second name for the scanned image without rebuilding it.
+          docker tag "$image" "$versioned_image"
+
+          # Push the versioned tag first. If it fails, the Bash step exits
+          # before attempting to update www. The two pushes are separate,
+          # so a failed www push can leave the versioned tag published.
+          docker push "$versioned_image"
+          docker push "$image"

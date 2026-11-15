@@ -1,74 +1,45 @@
-# Define the name of the workflow.
-name: Scan Dockerfile with Hadolint
+# Lint the Dockerfile that builds Dragonfly's web image.
+# Developers can use the reported line numbers and rule IDs during review.
+name: Lint Dockerfile with Hadolint
 
-# Define when the workflow should be triggered.
 on:
-  # Trigger the workflow on the following events:
-
-  # Scan changed files in Pull Requests (diff-aware scanning).
+  # Run before merge. Each run lints the entire named Dockerfile.
   pull_request: {}
 
-  # Trigger the workflow on-demand through the GitHub Actions interface.
+  # Let maintainers rerun the lint check from the Actions tab.
   workflow_dispatch: {}
 
-  # Scan mainline branches (main and development) and report all findings.
+  # Check the Dockerfile again after changes reach development.
   push:
     branches:
       - development
 
-# Define the jobs that should be executed in this workflow.
-jobs:
-  hadolint-job:
-    name: Hadolint Github Action
+# Checkout needs repository read access. Lint output goes to the run log.
+permissions:
+  contents: read
 
-    # Specify the runner environment. Use the latest version of Ubuntu.
+jobs:
+  hadolint:
+    name: Lint Dragonfly web Dockerfile
     runs-on: ubuntu-latest
 
-    # Define permissions for specific GitHub Actions.
-    permissions:
-      actions: read          # Permission to read GitHub Actions.
-      contents: read         # Permission to read repository contents.
-      security-events: write # Permission to write security events.
-
-    # Define the steps that should be executed in this job.
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        # Step: Checkout code
-        # Action to check out the code from the repository.
-        # This step fetches the codebase from the GitHub repository.
-
-      - name: Run Hadolint Scan with SARIF result
-        uses: hadolint/hadolint-action@v3.1.0
+      - name: Checkout source code
+        # Pin actions to reviewed commits. Dependabot can propose updates.
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          # The linter only needs files from the checkout.
+          persist-credentials: false
+
+      - name: Lint the web Dockerfile
+        uses: hadolint/hadolint-action@06be81baf89a55ffd0e24b8f04a4185738dd3387 # v3.5.0
+        with:
+          # This is the Dockerfile used to build the www image.
           dockerfile: .build/www/Dockerfile
-          # Specify the name of the Dockerfile to be scanned.
-          
-          recursive: true
-          # Enable recursive scanning to include subdirectories.
-      
-          output-file: hadolint-results.sarif
-          # Define the name of the SARIF format output file.
-      
-          no-fail: true
-          # Continue the workflow even if there are issues found (no-fail set to true).
-      
-          format: 'sarif'
-          # Specify the format of the scan results, in this case, SARIF format.
-      
-          failure-threshold: 'error'
-          # Define the threshold for failure based on severity (e.g., 'error').
-      
-          verbose: true
-          
-      # View results
-      - name: View Results
-        run: cat hadolint-results.sarif
 
-      - name: Upload Results to GitHub Advanced Security Dashboard
-        uses: github/codeql-action/upload-sarif@main
-        with:
-          sarif_file: hadolint-results.sarif
-          category: "Hadolint Dockerfile Scan"
-        if: always()
-        # Upload the SARIF file with scan results to the GitHub Advanced Security Dashboard.
+          # Print readable findings with the location, rule ID, and message.
+          format: tty
+
+          # Report findings during rollout. To enforce errors later,
+          # set no-fail to false and failure-threshold to error.
+          no-fail: true

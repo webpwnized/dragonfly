@@ -1,74 +1,95 @@
-# Name of this GitHub Actions workflow.
+# Scan Dragonfly's application source with Semgrep Community Edition.
 name: Scan Application Code with Semgrep SAST
 
 on:
-  # Trigger the workflow on the following events:
-
-  # Scan changed files in Pull Requests (diff-aware scanning).
+  # Analyze changes before merge. The scan uses the PR base commit to
+  # report findings introduced by the proposed changes.
   pull_request: {}
 
-  # Trigger the workflow on-demand through the GitHub Actions interface.
+  # Allow a full scan on demand from the Actions tab.
   workflow_dispatch: {}
 
-  # Scan development branches and report findings.
+  # Refresh full-branch results after changes reach development.
   push:
     branches:
-      - 'development'
+      - development
 
 jobs:
   semgrep:
-    # User definable name of this GitHub Actions job.
-    name: Scan Application Code with Semgrep SAST
-
-    # Specify the runner environment. Use the latest version of Ubuntu.
+    name: Scan application source with Semgrep
     runs-on: ubuntu-latest
 
-    # Define permissions for specific GitHub Actions.
     permissions:
-        actions: read          # Permission to read GitHub Actions.
-        contents: read         # Permission to read repository contents.
-        security-events: write # Permission to write security events.
+      # Read the repository and publish SARIF to GitHub Code Scanning.
+      contents: read
+      security-events: write
 
+    # Keep the Semgrep container from the original workflow.
     container:
-      # Use a Docker image with Semgrep installed. Do not change this.
       image: returntocorp/semgrep
 
-    # Skip any Pull Request created by the Dependabot to avoid permission issues.
-    if: (github.actor != 'dependabot[bot]')
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        # Step: Checkout code
-        # Action to check out the code from the repository.
-        # This step fetches the codebase from the GitHub repository.
-
-      - name: Run Semgrep XSS Scan
-        run: semgrep --config p/xss --sarif --output=semgrep-xss-results.sarif
-        continue-on-error: true
-        # Execute Semgrep to scan the code for XSS (Cross-Site Scripting) vulnerabilities using the p/xss configuration.
-        # Save the results in SARIF format to semgrep-xss-results.sarif.
-        # Continue the workflow even if there are errors during the scan.
-
-      - name: Run Semgrep High-Confidence SAST Scan
-        run: semgrep --config p/ci --sarif --output=semgrep-ci-results.sarif
-        continue-on-error: true
-        # Execute Semgrep to scan the code for XSS (Cross-Site Scripting) vulnerabilities using the p/xss configuration.
-        # Save the results in SARIF format to semgrep-xss-results.sarif.
-        # Continue the workflow even if there are errors during the scan.
-
-      - name: Upload XSS SARIF file for GitHub Advanced Security Dashboard
-        uses: github/codeql-action/upload-sarif@main
+      - name: Checkout source code
+        # Pin actions by commit. The version comment helps reviewers
+        # identify the release when Dependabot proposes an update.
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          sarif_file: semgrep-xss-results.sarif
-          category: "Semgrep XSS Scan"
-        if: always()
-        # Upload the SARIF file with scan results to the GitHub Advanced Security Dashboard.
+          # The default PR checkout is GitHub's test merge commit.
+          # Fetch history so Semgrep can resolve the PR base commit.
+          fetch-depth: 0
+          persist-credentials: false
 
-      - name: Upload CI SARIF file for GitHub Advanced Security Dashboard
-        uses: github/codeql-action/upload-sarif@main
+      - name: Scan Dragonfly application source
+        shell: bash
+        env:
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          # Run both packs together and produce a single SARIF report.
+          # p/ci is the general security baseline. p/php adds targeted
+          # coverage for the PHP code that processes requests and renders HTML.
+          scan_args=(
+            --config p/ci
+            --config p/php
+            --metrics=off
+            --sarif-output semgrep-results.sarif
+          )
+
+          # Push and manual events leave PR_BASE_SHA empty and scan the
+          # full application tree. PRs compare against their base commit.
+          if [[ -n "$PR_BASE_SHA" ]]; then
+            scan_args+=(--baseline-commit "$PR_BASE_SHA")
+          fi
+
+          # Semgrep writes readable findings to the log and SARIF to disk.
+          # Findings are report-only. A nonzero scanner exit still fails
+          # the step, and a missing or empty report also fails the step.
+          semgrep scan "${scan_args[@]}" src
+          test -s semgrep-results.sarif
+
+      - name: Save Semgrep report
+        # Keep any report produced before a failure for troubleshooting.
+        # This also gives fork and Dependabot PRs a downloadable report.
+        if: ${{ !cancelled() && hashFiles('semgrep-results.sarif') != '' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          sarif_file: semgrep-ci-results.sarif
-          category: "Semgrep High-Confidence SAST Scan"
-        if: always()
-        # Upload the SARIF file with scan results to the GitHub Advanced Security Dashboard.
+          name: semgrep-results
+          path: semgrep-results.sarif
+          if-no-files-found: error
+
+      - name: Publish findings to GitHub Code Scanning
+        # Fork and Dependabot PRs still run the scan and save the report.
+        # This workflow limits SARIF uploads to the cases below.
+        if: >-
+          ${{
+            success() &&
+            github.actor != 'dependabot[bot]' &&
+            (
+              github.event_name != 'pull_request' ||
+              github.event.pull_request.head.repo.full_name == github.repository
+            )
+          }}
+        uses: github/codeql-action/upload-sarif@33d7b85da1a04171e211befe2c739303b9a4c066 # v4.39.3
+        with:
+          sarif_file: semgrep-results.sarif
+          # Keep one stable category for the combined scan.
+          category: Semgrep Application SAST

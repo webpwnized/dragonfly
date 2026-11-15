@@ -1,45 +1,91 @@
-name: Scan Dockerfiles with Trivy
+# Scan the Dockerfile that builds Dragonfly's web image.
+# This checks the build configuration before any image is built.
+name: Scan Dockerfile Misconfigurations with Trivy
 
 on:
+  # Review the current Dockerfile as part of pull request checks.
+  # Each run scans the whole file, including unchanged lines.
+  pull_request: {}
+
+  # Refresh the branch's findings after changes reach development.
   push:
     branches:
       - development
 
-  pull_request:
-
 jobs:
-  build:
-    name: Run Trivy on Dockerfile
-    
+  trivy-config:
+    name: Scan Dragonfly web Dockerfile
     runs-on: ubuntu-latest
-    
-    # Define permissions for specific actions
+
     permissions:
-      actions: read
+      # Checkout reads the repository. Code Scanning accepts SARIF uploads.
       contents: read
       security-events: write
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Run Trivy vulnerability scanner in Config mode
-        uses: aquasecurity/trivy-action@master
+      - name: Checkout source code
+        # Pin actions to reviewed commits. Dependabot can propose updates.
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          scan-type: 'config'
-          hide-progress: false
-          format: 'sarif'
-          output: 'dockerfile-trivy-scan-results.sarif'
+          # Later steps only need the checked-out files.
+          persist-credentials: false
+
+      - name: Verify the Dockerfile exists
+        shell: bash
+        run: |
+          # Fail with a clear message if the Dockerfile moves.
+          if [[ ! -f .build/www/Dockerfile ]]; then
+            echo "::error::Expected Dockerfile at .build/www/Dockerfile"
+            exit 1
+          fi
+
+      - name: Scan the Dockerfile with Trivy
+        uses: aquasecurity/trivy-action@a9c7b0f06e461e9d4b4d1711f154ee024b8d7ab8 # v0.36.0
+        with:
+          # Config mode checks infrastructure and build definitions.
+          # Scan the same Dockerfile used to build the www image.
+          scan-type: config
+          scan-ref: .build/www/Dockerfile
+          format: sarif
+          output: dockerfile-trivy-scan-results.sarif
+          severity: 'LOW,MEDIUM,HIGH,CRITICAL'
+
+          # Findings are report-only. A scanner execution failure still
+          # fails the step and prevents publication to Code Scanning.
           exit-code: '0'
-          ignore-unfixed: true
-          severity: 'CRITICAL,HIGH,MEDIUM,LOW'
 
-      # View results
-      - name: View Results
-        run: cat dockerfile-trivy-scan-results.sarif
+      - name: Verify the scan produced a report
+        shell: bash
+        run: |
+          # A successful scan should produce SARIF even with zero findings.
+          if [[ ! -s dockerfile-trivy-scan-results.sarif ]]; then
+            echo "::error::Trivy did not produce a nonempty SARIF report."
+            exit 1
+          fi
 
-      - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@main
-        if: always()
+      - name: Save the Trivy report
+        # Preserve any generated report for troubleshooting or PR review.
+        if: ${{ !cancelled() && hashFiles('dockerfile-trivy-scan-results.sarif') != '' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          sarif_file: 'dockerfile-trivy-scan-results.sarif'
+          name: dockerfile-trivy-scan-results
+          path: dockerfile-trivy-scan-results.sarif
+          if-no-files-found: error
+
+      - name: Publish findings to GitHub Code Scanning
+        # Fork and Dependabot PRs still run the scan and retain the report.
+        # This workflow limits dashboard uploads to the cases below.
+        if: >-
+          ${{
+            success() &&
+            github.actor != 'dependabot[bot]' &&
+            (
+              github.event_name != 'pull_request' ||
+              github.event.pull_request.head.repo.full_name == github.repository
+            )
+          }}
+        uses: github/codeql-action/upload-sarif@33d7b85da1a04171e211befe2c739303b9a4c066 # v4.39.3
+        with:
+          sarif_file: dockerfile-trivy-scan-results.sarif
+          # Keep this category stable so GitHub can track findings over time.
+          category: Trivy Dockerfile Misconfigurations
