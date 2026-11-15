@@ -1,0 +1,68 @@
+# Scan the JavaScript files distributed with Dragonfly for known vulnerable
+# third-party libraries. The scan reads the checked-out files directly.
+name: Scan JavaScript Dependencies with Retire.js
+
+# A push or pull request merge into development triggers the scan.
+on:
+  push:
+    branches:
+      - development
+
+# Checkout needs read access. The JSON report is a workflow artifact.
+permissions:
+  contents: read
+
+jobs:
+  retire-js:
+    name: Scan bundled JavaScript libraries
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        # Pin the action to a reviewed commit. Dependabot can update this pin.
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # The scanner reads files and does not need Git credentials.
+          persist-credentials: false
+
+      - name: Scan Dragonfly source with Retire.js
+        shell: bash
+        run: |
+          # Use the upstream npm CLI. Install a specific release and disable
+          # package lifecycle scripts during installation.
+          npm install --global --ignore-scripts retire@6.1.0
+
+          # Retire.js uses 13 for findings. Capture the exit code so findings
+          # can be reported without hiding scanner execution errors.
+          scan_status=0
+          retire \
+            --path ./src \
+            --outputformat json \
+            --outputpath retire-js-report.json \
+            --exitwith 13 || scan_status=$?
+
+          case "$scan_status" in
+            0)
+              echo "Retire.js completed without reporting known vulnerabilities."
+              ;;
+            13)
+              echo "::warning::Retire.js reported vulnerable libraries. Review the JSON artifact."
+              ;;
+            *)
+              echo "::error::Retire.js failed with exit code $scan_status."
+              exit "$scan_status"
+              ;;
+          esac
+
+          # Require a parseable report before treating the scan as complete.
+          node -e 'JSON.parse(require("node:fs").readFileSync(process.argv[1], "utf8"))' \
+            retire-js-report.json
+
+      - name: Save Retire.js report
+        # Preserve any report produced before a failure for troubleshooting.
+        if: ${{ !cancelled() && hashFiles('retire-js-report.json') != '' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: retire-js-report
+          path: retire-js-report.json
+          if-no-files-found: error
