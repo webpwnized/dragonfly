@@ -83,7 +83,7 @@
 
     header('Cache-Control: no-store, no-cache', true);
     header('X-FRAME-OPTIONS: DENY', true);
-    header($contentSecurityPolicy, true);
+    header('Content-Security-Policy: ' . $contentSecurityPolicy, true);
     header('X-Content-Type-Options: nosniff', true);
     header('Referrer-Policy: no-referrer', true);
     header('Permissions-Policy: ' . $permissionsPolicy, true);
