@@ -1,94 +1,89 @@
-# Build and start Dragonfly, then verify that the home page is reachable.
-name: Verify Dragonfly Container Startup
+# Define the name of the workflow.
+name: Scan Application with StackHawk
 
+# Define when the workflow should be triggered.
 on:
-  # Test the proposed changes before merge.
+  # Trigger the workflow on the following events:
+
+  # Scan changed files in Pull Requests (diff-aware scanning).
   pull_request: {}
 
-  # Allow maintainers to reproduce startup issues from the Actions tab.
+  # Trigger the workflow on-demand through the GitHub Actions interface.
   workflow_dispatch: {}
 
-  # Verify the application after changes reach development.
+  # Scan mainline branches (main and development) and report all findings.
   push:
-    branches:
-      - development
+    branches: ["development"]
 
-# This job reads source and runs a local container without registry credentials.
-permissions:
-  contents: read
-
+# Define the jobs that should be executed in this workflow.
 jobs:
-  startup:
-    name: Build and verify Dragonfly
+  # Job to run StackHawk HawkScan as a GitHub Action.
+  hawkscan-job:
+    name: StackHawk HawkScan Github Action
+
+    # Specify the runner environment. Use the latest version of Ubuntu.
     runs-on: ubuntu-latest
-    timeout-minutes: 10
 
+    # Define permissions for specific GitHub Actions.
+    permissions:
+      actions: read          # Permission to read GitHub Actions.
+      contents: read         # Permission to read repository contents.
+      security-events: write # Permission to write security events.
+
+    # Define the steps that should be executed in this job.
     steps:
-      - name: Checkout application source
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      # Step 1: Checkout the application source code from the repository.
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
-          persist-credentials: false
+          path: dragonfly
 
-      - name: Build the web image
+      # Step 2: Checkout the Dockerfile source code from the repository.
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          repository: webpwnized/dragonfly-docker
+          path: dragonfly-docker
+
+      # Step X: Testing
+      - name: Test
+        run: ls -lah
+
+      # Step 2: Build and Start Containers 
+      - name: Build and Start Containers
+        run: |
+
+          # Starting containers using Docker Compose.
+          docker-compose -f docker-compose.yml up -d;
+
+      # Step 3: Wait for Dragonfly to answer on the published port.
+      - name: Check Web Application
         shell: bash
         run: |
-          # Use the existing Dockerfile so this checks the same runtime
-          # image definition used by the repository.
-          docker build \
-            --file .build/www/Dockerfile \
-            --tag webpwnized/dragonfly:www \
-            .
-
-      - name: Start Dragonfly with the checked-out source
-        shell: bash
-        run: |
-          # The Dockerfile fetches application source during its build.
-          # Overlay it with this checkout so PR checks serve the code
-          # under review while using the image's web server and startup command.
-          test -f "$GITHUB_WORKSPACE/src/index.php"
-
-          docker run --detach \
-            --name dragonfly-smoke \
-            --publish 127.0.0.1:8888:80 \
-            --mount "type=bind,source=$GITHUB_WORKSPACE/src,target=/var/www/dragonfly,readonly" \
-            webpwnized/dragonfly:www
-
-      - name: Wait for the Dragonfly home page
-        shell: bash
-        run: |
-          # Docker can report that a container started before its web
-          # server accepts requests. Retry transient connection failures
-          # and verify that the response is the expected page.
-          for attempt in {1..20}; do
-            if response=$(curl --fail --silent --show-error --max-time 3 \
+          # Compose can report "Started" before the web server accepts HTTP.
+          # Retry startup errors for a bounded period.
+          for attempt in {1..10}; do
+            if status=$(curl --silent --show-error --max-time 3 \
+                --output /dev/null --write-out '%{http_code}' \
                 http://127.0.0.1:8888/) &&
-                [[ "$response" == *'<title>Dragonfly</title>'* ]]; then
+                [[ "$status" == "200" ]]; then
               echo "Dragonfly is ready on port 8888."
               exit 0
             fi
 
-            echo "Readiness attempt $attempt of 20 did not succeed."
+            echo "Readiness attempt $attempt of 15 did not return HTTP 200."
             sleep 2
           done
 
-          echo "::error::Dragonfly did not serve the expected home page."
+          echo "::error::Dragonfly did not return HTTP 200 on port 8888."
           exit 1
 
-      - name: Show container diagnostics
-        if: ${{ failure() }}
-        shell: bash
-        run: |
-          # Show whether the container exited and capture its startup output.
-          docker ps --all --filter name=dragonfly-smoke
-          if docker container inspect dragonfly-smoke >/dev/null 2>&1; then
-            docker logs --tail 100 dragonfly-smoke
-          fi
+      # Step 7: Run StackHawk Scan
+      - name: Run StackHawk Scan
+        uses: stackhawk/hawkscan-action@v2
+        with:
+          apiKey: ${{ secrets.HAWK_API_KEY }}     # Secret key for authentication.
+          configurationFiles: .github/workflows/config/stackhawk.yml  # Path to configuration file.
+          codeScanningAlerts: true   # Enable code scanning alerts.
+          githubToken: ${{ github.token }}   # GitHub token for authentication to Code Scanning Alerts
 
-      - name: Remove the smoke-test container
-        if: ${{ always() }}
-        shell: bash
-        run: |
-          # Clean up even when the readiness check fails.
-          if docker container inspect dragonfly-smoke >/dev/null 2>&1; then
-            docker rm --force dragonfly-smoke
-          fi
