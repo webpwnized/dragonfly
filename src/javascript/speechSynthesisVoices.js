@@ -13,12 +13,20 @@ class SpeechSynthesisVoices {
                 return "No voices reported";
             }
 
-            return voices.map(voice => {
-                const service = voice.localService ? "local" : "remote";
-                const defaultLabel = voice.default ? ", default" : "";
+            const localCount = voices.filter(voice => voice.localService).length;
+            const remoteCount = voices.length - localCount;
+            const languageTagCount = new Set(
+                voices.map(voice => voice.lang.toLowerCase()).filter(Boolean)
+            ).size;
+            const formatCount = new Intl.NumberFormat("en-US");
 
-                return `${voice.name} (${voice.lang}, ${service}${defaultLabel})`;
-            }).join("; ");
+            return [
+                `${formatCount.format(voices.length)} ${voices.length === 1 ? "voice" : "voices"}`,
+                `${formatCount.format(localCount)} local`,
+                `${formatCount.format(remoteCount)} remote`,
+                `${formatCount.format(languageTagCount)} ${languageTagCount === 1 ? "language tag" : "language tags"}`
+            ].join(" · ");
+
         } catch (error) {
             console.error("Error reading speech synthesis voices:", error);
             return "Voice enumeration failed";
