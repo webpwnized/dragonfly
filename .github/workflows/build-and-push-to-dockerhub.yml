@@ -46,7 +46,7 @@ jobs:
         # Pin actions to full commit SHAs so a moved release tag cannot
         # silently change the code that runs. The version comment makes
         # the pin readable. Dependabot can propose updates to the SHA.
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           # The job reads the checkout and never pushes back to GitHub.
           # Keep checkout credentials out of the local Git configuration.
@@ -85,7 +85,7 @@ jobs:
             .
 
       - name: Scan web image with Trivy
-        uses: aquasecurity/trivy-action@a9c7b0f06e461e9d4b4d1711f154ee024b8d7ab8 # v0.36.0
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
         with:
           # Action inputs use GitHub expression syntax. Bash steps use
           # shell variables such as ${IMAGE_REPOSITORY}.
@@ -103,7 +103,7 @@ jobs:
         # An explicit condition lets this step save an existing report
         # after a failed scan. A canceled run skips the upload.
         if: ${{ !cancelled() && hashFiles('www-trivy-scan-results.sarif') != '' }}
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           # Download this report from the GitHub Actions run summary.
           # It is a workflow artifact, not a Code Scanning alert upload.
@@ -114,7 +114,7 @@ jobs:
       - name: Log in to Docker Hub
         # The build and scan steps run before registry login. Give the
         # publishing token only the permissions needed to push this image.
-        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3.3.0
+        uses: docker/login-action@8aa5831fb8d48d8f76594c7ddde61ae58019f550 # v4.8.0
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
