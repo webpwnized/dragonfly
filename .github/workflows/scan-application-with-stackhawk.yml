@@ -51,10 +51,10 @@ jobs:
 
       # Step 2: Build and Start Containers 
       - name: Build and Start Containers
+        working-directory: dragonfly-docker
         run: |
-
-          # Starting containers using Docker Compose.
-          docker-compose -f docker-compose.yml up -d;
+          # Start the www service using the Docker project's Compose file.
+          docker compose -f .build/docker-compose.yml up -d --build www
 
       # Step 3: Wait for Dragonfly to answer on the published port.
       - name: Check Web Application
