@@ -34,13 +34,13 @@ jobs:
     steps:
       # Step 1: Checkout the application source code from the repository.
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           path: dragonfly
 
       # Step 2: Checkout the Dockerfile source code from the repository.
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: webpwnized/dragonfly-docker
           path: dragonfly-docker
@@ -80,7 +80,7 @@ jobs:
 
       # Step 7: Run StackHawk Scan
       - name: Run StackHawk Scan
-        uses: stackhawk/hawkscan-action@v2
+        uses: stackhawk/hawkscan-action@v3
         with:
           apiKey: ${{ secrets.HAWK_API_KEY }}     # Secret key for authentication.
           configurationFiles: dragonfly/.config/stackhawk/stackhawk.yml  # Path to configuration file.
