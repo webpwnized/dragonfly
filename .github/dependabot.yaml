@@ -1,8 +1,21 @@
 version: 2
 
 updates:
+  # GitHub Actions updates for main.
   - package-ecosystem: github-actions
     directory: /
+    target-branch: main
+    schedule:
+      interval: weekly
+    groups:
+      workflow-actions:
+        patterns:
+          - "*"
+
+  # GitHub Actions updates for development.
+  - package-ecosystem: github-actions
+    directory: /
+    target-branch: development
     schedule:
       interval: weekly
     groups:

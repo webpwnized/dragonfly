@@ -54,7 +54,7 @@ jobs:
         working-directory: dragonfly-docker
         run: |
           # Start the www service using the Docker project's Compose file.
-          docker compose -f .build/docker-compose.yml up -d --build www
+          docker compose -f .build/docker-compose.yaml up -d --build www
 
       # Step 3: Wait for Dragonfly to answer on the published port.
       - name: Check Web Application
@@ -83,7 +83,7 @@ jobs:
         uses: stackhawk/hawkscan-action@v2
         with:
           apiKey: ${{ secrets.HAWK_API_KEY }}     # Secret key for authentication.
-          configurationFiles: dragonfly/.config/stackhawk/stackhawk.yml  # Path to configuration file.
+          configurationFiles: dragonfly/.config/stackhawk/stackhawk.yaml  # Path to configuration file.
           codeScanningAlerts: true   # Enable code scanning alerts.
           githubToken: ${{ github.token }}   # GitHub token for authentication to Code Scanning Alerts
 
