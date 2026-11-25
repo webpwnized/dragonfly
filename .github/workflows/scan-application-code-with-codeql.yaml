@@ -33,7 +33,7 @@ jobs:
 
       - name: Initialize CodeQL
         # Use the same CodeQL release for initialization and analysis.
-        uses: github/codeql-action/init@33d7b85da1a04171e211befe2c739303b9a4c066 # v4.39.3
+        uses: github/codeql-action/init@1bd86f2fdb4b86187fa4059f16f31a3202acc9ea # v4.39.4
         with:
           # One analyzer covers both JavaScript and TypeScript. A matrix
           # becomes useful when separate analyzer jobs are needed.
@@ -44,7 +44,7 @@ jobs:
           build-mode: none
 
       - name: Run CodeQL analysis and upload findings
-        uses: github/codeql-action/analyze@33d7b85da1a04171e211befe2c739303b9a4c066 # v4.39.3
+        uses: github/codeql-action/analyze@1bd86f2fdb4b86187fa4059f16f31a3202acc9ea # v4.39.4
         with:
           # Keep the existing category so GitHub can associate results
           # with the same analysis when scanning the same ref.
